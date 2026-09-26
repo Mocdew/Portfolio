@@ -1,8 +1,14 @@
 import { mdsvex } from 'mdsvex';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
-import adapter from '@sveltejs/adapter-static';
+import staticAdapter from '@sveltejs/adapter-static';
+import vercelAdapter from '@sveltejs/adapter-vercel';
 import { sveltekit } from '@sveltejs/kit/vite';
+
+// Pages are prerendered either way. On Vercel, adapter-vercel serves them and renders the
+// custom 404 for unknown routes. It can't build on Windows without Developer Mode (it
+// symlinks node_modules), so local builds use adapter-static instead.
+const adapter = process.env.VERCEL ? vercelAdapter() : staticAdapter({ fallback: '404.html' });
 
 export default defineConfig({
 	plugins: [
@@ -13,8 +19,7 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			// Fully prerendered; 404.html serves unknown routes on Vercel.
-			adapter: adapter({ fallback: '404.html' }),
+			adapter,
 			preprocess: [mdsvex({ extensions: ['.svx', '.md'] })],
 			extensions: ['.svelte', '.svx', '.md']
 		})
