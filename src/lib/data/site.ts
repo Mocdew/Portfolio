@@ -6,7 +6,7 @@ export const site = {
 	focus: 'Applied ML for fintech',
 	location: 'Lagos, Nigeria',
 	// Production address; used for canonical and social-preview URLs. Update if a custom domain is added.
-	url: 'https://portfolio-iota-swart-11.vercel.app',
+	url: 'https://olumide-erinfolami.vercel.app',
 	description:
 		'Machine learning engineer building credit-risk, forecasting and payments models for fintech — shipped as APIs with tests, model cards and honest limitations.',
 	email: 'anthonyerinfolami@gmail.com',
