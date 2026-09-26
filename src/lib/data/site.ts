@@ -5,8 +5,8 @@ export const site = {
 	role: 'Machine Learning Engineer',
 	focus: 'Applied ML for fintech',
 	location: 'Lagos, Nigeria',
-	// TODO: replace with the real address once the site is deployed.
-	url: 'https://olumide-erinfolami.vercel.app',
+	// Production address; used for canonical and social-preview URLs. Update if a custom domain is added.
+	url: 'https://portfolio-iota-swart-11.vercel.app',
 	description:
 		'Machine learning engineer building credit-risk, forecasting and payments models for fintech — shipped as APIs with tests, model cards and honest limitations.',
 	email: 'anthonyerinfolami@gmail.com',
