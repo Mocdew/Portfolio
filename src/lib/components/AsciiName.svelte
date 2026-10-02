@@ -19,17 +19,18 @@
 		font-size: clamp(5px, calc((100vw - 2rem) / 36), 15px);
 		line-height: 1.05;
 		color: var(--color-fg);
+		/* A faint RGB split on the light page; the full-strength CRT fringes are for dark mode. */
 		text-shadow:
-			-1px 0 rgb(255 70 70 / 0.45),
-			1px 0 rgb(70 200 255 / 0.45);
+			-1px 0 rgb(220 40 40 / 0.25),
+			1px 0 rgb(20 140 220 / 0.25);
 		animation: glitch 7s steps(1) infinite;
 		overflow: hidden;
 	}
 
-	:global([data-theme='light']) .ascii {
+	:global([data-theme='dark']) .ascii {
 		text-shadow:
-			-1px 0 rgb(220 40 40 / 0.25),
-			1px 0 rgb(20 140 220 / 0.25);
+			-1px 0 rgb(255 70 70 / 0.45),
+			1px 0 rgb(70 200 255 / 0.45);
 	}
 
 	.ascii-fallback {

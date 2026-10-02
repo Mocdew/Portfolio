@@ -30,24 +30,25 @@ export async function copy(text: string, what: string) {
 export type ThemeChoice = 'light' | 'dark' | 'system';
 
 const THEME_KEY = 'theme';
-const systemLight = () => matchMedia('(prefers-color-scheme: light)').matches;
+const DARK_QUERY = '(prefers-color-scheme: dark)';
 
-/** The visitor's choice. Following the OS is the default; app.html applies it before first paint. */
-export const theme = $state({ choice: 'system' as ThemeChoice });
+/** The visitor's choice. Light is the default; app.html applies the choice before first paint. */
+export const theme = $state({ choice: 'light' as ThemeChoice });
 
 function apply() {
-	const light = theme.choice === 'light' || (theme.choice === 'system' && systemLight());
-	if (light) document.documentElement.setAttribute('data-theme', 'light');
+	const dark =
+		theme.choice === 'dark' || (theme.choice === 'system' && matchMedia(DARK_QUERY).matches);
+	if (dark) document.documentElement.setAttribute('data-theme', 'dark');
 	else document.documentElement.removeAttribute('data-theme');
 	document
 		.querySelector('meta[name="theme-color"]')
-		?.setAttribute('content', light ? '#f6f6f3' : '#050404');
+		?.setAttribute('content', dark ? '#050404' : '#f6f6f3');
 }
 
 export function setTheme(choice: ThemeChoice) {
 	theme.choice = choice;
 	try {
-		if (choice === 'system') localStorage.removeItem(THEME_KEY);
+		if (choice === 'light') localStorage.removeItem(THEME_KEY);
 		else localStorage.setItem(THEME_KEY, choice);
 	} catch {
 		// Storage blocked: the choice still applies for this visit.
@@ -59,12 +60,12 @@ export function setTheme(choice: ThemeChoice) {
 export function watchTheme() {
 	try {
 		const saved = localStorage.getItem(THEME_KEY);
-		if (saved === 'light' || saved === 'dark') theme.choice = saved;
+		if (saved === 'dark' || saved === 'system') theme.choice = saved;
 	} catch {
 		// Storage blocked: stay on the default.
 	}
 	apply();
-	const mq = matchMedia('(prefers-color-scheme: light)');
+	const mq = matchMedia(DARK_QUERY);
 	const onChange = () => theme.choice === 'system' && apply();
 	mq.addEventListener('change', onChange);
 	return () => mq.removeEventListener('change', onChange);

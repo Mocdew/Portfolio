@@ -12,7 +12,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<meta name="theme-color" content="#050404" />
+	<meta name="theme-color" content="#f6f6f3" />
 </svelte:head>
 
 <a

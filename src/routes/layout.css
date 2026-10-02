@@ -3,23 +3,10 @@
 @import '@fontsource-variable/geist-mono';
 @plugin '@tailwindcss/typography';
 
+/* Light is the default theme: the warm neutrals and blue of the Recoup console's light mode.
+   Recoup's lightest grey (#85837d) and its blue (#2a78d6) are a little faint for small text, so
+   dim and accent use the darker steps that keep 4.5:1 contrast on both the page and the cards. */
 @theme {
-	--color-bg: #050404;
-	--color-panel: #0b0a0a;
-	--color-hairline: #1f1c1c;
-	--color-fg: #e4e0e0;
-	--color-muted: #9a9494;
-	--color-dim: #7e7878; /* lightest grey that keeps 4.5:1 contrast on bg and panel */
-	--color-accent: #f2b84b;
-
-	--font-sans: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-	--font-mono: 'Geist Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-/* Light theme: the warm neutrals and blue of the Recoup console's light mode. Recoup's lightest
-   grey (#85837d) and its blue (#2a78d6) are a little faint for small text, so dim and accent use
-   the darker steps that keep 4.5:1 contrast on both the page and the cards. */
-:root[data-theme='light'] {
 	--color-bg: #f6f6f3;
 	--color-panel: #ffffff;
 	--color-hairline: #e6e5df;
@@ -27,16 +14,30 @@
 	--color-muted: #52514e;
 	--color-dim: #706e69;
 	--color-accent: #1c5cab;
-	--scanline: rgb(0 0 0 / 0.022);
-	--glass: rgb(255 255 255 / 0.7);
-	color-scheme: light;
+
+	--font-sans: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	--font-mono: 'Geist Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Dark theme: the original terminal look, with an amber accent. */
+:root[data-theme='dark'] {
+	--color-bg: #050404;
+	--color-panel: #0b0a0a;
+	--color-hairline: #1f1c1c;
+	--color-fg: #e4e0e0;
+	--color-muted: #9a9494;
+	--color-dim: #7e7878; /* lightest grey that keeps 4.5:1 contrast on bg and panel */
+	--color-accent: #f2b84b;
+	--scanline: rgb(255 255 255 / 0.018);
+	--glass: rgb(12 11 11 / 0.6);
+	color-scheme: dark;
 }
 
 @layer base {
 	html {
-		color-scheme: dark;
-		--scanline: rgb(255 255 255 / 0.018);
-		--glass: rgb(12 11 11 / 0.6);
+		color-scheme: light;
+		--scanline: rgb(0 0 0 / 0.022);
+		--glass: rgb(255 255 255 / 0.7);
 		scroll-behavior: smooth;
 		scroll-padding-top: 3.5rem;
 	}
@@ -177,8 +178,8 @@ body::after {
 }
 
 /* Images that come in a dark and a light version (see Project.image.srcLight). */
-:root[data-theme='light'] .dark-only,
-:root:not([data-theme='light']) .light-only {
+:root[data-theme='dark'] .light-only,
+:root:not([data-theme='dark']) .dark-only {
 	display: none;
 }
 

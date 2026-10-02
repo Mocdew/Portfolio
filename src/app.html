@@ -5,13 +5,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
 		<script>
-			// Apply the theme before first paint, so a reload never flashes the wrong one. A saved
-			// "light" or "dark" wins; otherwise follow the OS. Kept in step with apply() in ui.svelte.ts.
+			// Apply the theme before first paint, so a reload never flashes the wrong one. Light is the
+			// default; a saved "dark" or "system" changes it. Kept in step with apply() in ui.svelte.ts.
 			try {
 				var t = localStorage.getItem('theme');
-				if (t !== 'light' && t !== 'dark')
-					t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-				if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+				if (t === 'system')
+					t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+				if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
 			} catch (e) {}
 		</script>
 		%sveltekit.head%
