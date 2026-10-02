@@ -1,7 +1,10 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import CommandPalette from '$lib/components/CommandPalette.svelte';
+	import Toast from '$lib/components/Toast.svelte';
 	import { site } from '$lib/data/site';
+	import { palette } from '$lib/ui.svelte';
 
 	let { children } = $props();
 </script>
@@ -28,5 +31,18 @@
 	>
 		<span>© {new Date().getFullYear()} {site.name}</span>
 		<span>Built with SvelteKit · hosted on Vercel</span>
+		<button
+			type="button"
+			onclick={() => (palette.open = true)}
+			class="inline-flex w-full items-center gap-1.5 hover:text-fg sm:w-auto"
+		>
+			<span class="sm:hidden">Quick menu →</span>
+			<span class="hidden sm:inline"
+				>Press <kbd class="rounded border border-hairline px-1 text-muted">⌘K</kbd> to jump anywhere</span
+			>
+		</button>
 	</footer>
 </div>
+
+<CommandPalette />
+<Toast />

@@ -9,7 +9,7 @@
 	--color-hairline: #1f1c1c;
 	--color-fg: #e4e0e0;
 	--color-muted: #9a9494;
-	--color-dim: #5f5959;
+	--color-dim: #7e7878; /* lightest grey that keeps 4.5:1 contrast on bg and panel */
 	--color-accent: #f2b84b;
 
 	--font-sans: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -20,7 +20,7 @@
 	html {
 		color-scheme: dark;
 		scroll-behavior: smooth;
-		scroll-padding-top: 2rem;
+		scroll-padding-top: 3.5rem;
 	}
 
 	body {
@@ -84,5 +84,76 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
 	.cursor::after {
 		animation: none;
+	}
+}
+
+/* Hero tagline types itself out once. Wide screens only, since each line must fit on one row,
+   and skipped entirely with reduced motion. The text is always in the DOM for screen readers. */
+@media (min-width: 40rem) and (prefers-reduced-motion: no-preference) {
+	.type {
+		display: inline-block;
+		vertical-align: bottom;
+		overflow: hidden;
+		white-space: nowrap;
+		animation: type var(--ms) steps(var(--n)) var(--delay) both;
+	}
+}
+
+@keyframes type {
+	from {
+		max-width: 0;
+	}
+	to {
+		max-width: calc((var(--n) + 1) * 1ch);
+	}
+}
+
+/* Long-form text on the case-study pages. In the components layer so utilities still win. */
+@layer components {
+	.case-study {
+		& p,
+		& li {
+			font-family: var(--font-sans);
+			line-height: 1.7;
+			color: var(--color-muted);
+		}
+		& section > p,
+		& section > ul {
+			max-width: 65ch;
+		}
+		& section > p + p,
+		& section > p + ul,
+		& section > ul + p {
+			margin-top: 1rem;
+		}
+		& section > ul {
+			list-style: none;
+			& > li {
+				position: relative;
+				padding-left: 1.25rem;
+				margin-top: 0.5rem;
+			}
+			& > li::before {
+				content: '–';
+				position: absolute;
+				left: 0;
+				color: var(--color-dim);
+			}
+		}
+		& strong {
+			color: var(--color-fg);
+			font-weight: 600;
+		}
+		& h3 {
+			margin: 2rem 0 0.5rem;
+			font-size: 0.95rem;
+			font-weight: 600;
+			color: var(--color-fg);
+		}
+		& code {
+			font-family: var(--font-mono);
+			font-size: 0.85em;
+			color: var(--color-fg);
+		}
 	}
 }

@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { renderAscii } from '$lib/ascii';
 import { projects } from './projects';
@@ -14,6 +15,12 @@ describe('projects', () => {
 			for (const href of Object.values(project.links)) {
 				expect(new URL(href!).protocol, `${project.slug}: ${href}`).toBe('https:');
 			}
+		}
+	});
+
+	it('has a route for every project marked as a case study', () => {
+		for (const p of projects.filter((p) => p.caseStudy)) {
+			expect(existsSync(`src/routes/projects/${p.slug}/+page.svelte`), p.slug).toBe(true);
 		}
 	});
 

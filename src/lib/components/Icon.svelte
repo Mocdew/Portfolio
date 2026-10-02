@@ -1,5 +1,6 @@
 <script lang="ts" module>
-	export type IconName = 'github' | 'linkedin' | 'mail' | 'arrow-up-right' | 'file' | 'arrow-down';
+	export type IconName =
+		'github' | 'linkedin' | 'mail' | 'arrow-up-right' | 'file' | 'arrow-down' | 'copy';
 </script>
 
 <script lang="ts">
@@ -47,6 +48,9 @@
 			<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
 		{:else if name === 'arrow-up-right'}
 			<path d="M7 17 17 7M7 7h10v10" />
+		{:else if name === 'copy'}
+			<rect x="8" y="8" width="14" height="14" rx="2" />
+			<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
 		{:else if name === 'arrow-down'}
 			<path d="M12 5v14M19 12l-7 7-7-7" />
 		{:else}

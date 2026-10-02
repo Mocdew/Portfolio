@@ -15,6 +15,8 @@ export type Project = {
 	category: Category;
 	/** Featured projects get the full-width card at the top of the list. */
 	featured?: boolean;
+	/** Has a long-form write-up at /projects/<slug> (src/routes/projects/<slug>/+page.svelte). */
+	caseStudy?: boolean;
 	/** A real chart or screenshot from the project, served from /static/projects. */
 	image?: { src: string; alt: string; width: number; height: number };
 	private?: boolean;
@@ -31,6 +33,10 @@ export type Category = (typeof categories)[number];
 
 const gh = (repo: string) => `https://github.com/Mocdew/${repo}`;
 
+// Case studies are static routes under src/routes/projects/, so the path is typed as one of them.
+export const caseStudyHref = (p: Pick<Project, 'slug'>) =>
+	`/projects/${p.slug}` as '/projects/recoup' | '/projects/can-i-borrow';
+
 export const projects: Project[] = [
 	{
 		slug: 'can-i-borrow',
@@ -43,7 +49,8 @@ export const projects: Project[] = [
 		tags: ['LightGBM', 'scikit-learn', 'SHAP', 'Flask', 'pytest'],
 		links: { github: gh('Can-I-Borrow') },
 		category: 'Credit risk',
-		featured: true
+		featured: true,
+		caseStudy: true
 	},
 	{
 		slug: 'recoup',
@@ -69,12 +76,7 @@ export const projects: Project[] = [
 		links: { github: gh('Recoup'), demo: 'https://recoup-zeta-ten.vercel.app/' },
 		category: 'Payments',
 		featured: true,
-		image: {
-			src: '/projects/recoup.webp',
-			alt: 'The Recoup operator console: the deployment gate on HOLD with its confidence interval and effective sample size, plus recovery and exploration stats.',
-			width: 1200,
-			height: 750
-		}
+		caseStudy: true
 	},
 	{
 		slug: 'credipulse',

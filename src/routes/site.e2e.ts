@@ -1,11 +1,12 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-import { projects } from '../lib/data/projects';
+import { caseStudyHref, projects } from '../lib/data/projects';
 
 test('home page shows the name, every project and no console errors', async ({ page }) => {
 	const errors: string[] = [];
 	page.on('console', (msg) => {
-		// Vercel serves the analytics script only in deployments, so it 404s in local preview.
-		if (msg.type() === 'error' && !msg.location().url.includes('/_vercel/insights/')) {
+		// Vercel serves the analytics scripts only in deployments, so they 404 in local preview.
+		if (msg.type() === 'error' && !msg.location().url.includes('/_vercel/')) {
 			errors.push(msg.text());
 		}
 	});
@@ -61,4 +62,35 @@ test('social preview image is declared and served', async ({ page, request }) =>
 	const res = await request.get(new URL(og!).pathname);
 	expect(res.status()).toBe(200);
 	expect(res.headers()['content-type']).toContain('image/png');
+});
+
+const pages = ['/', '/why-hire-me', ...projects.filter((p) => p.caseStudy).map(caseStudyHref)];
+
+for (const path of pages) {
+	test(`${path} has no axe accessibility violations`, async ({ page }) => {
+		await page.goto(path);
+		const { violations } = await new AxeBuilder({ page }).analyze();
+		expect(violations.map((v) => `${v.id}: ${v.nodes.length} × ${v.help}`)).toEqual([]);
+	});
+}
+
+test('command palette opens with the keyboard, searches and navigates', async ({ page }) => {
+	await page.goto('/');
+	await page.keyboard.press('ControlOrMeta+k');
+	const search = page.getByRole('combobox', { name: /search/i });
+	await expect(search).toBeFocused();
+	const { violations } = await new AxeBuilder({ page }).include('dialog').analyze();
+	expect(violations.map((v) => v.id)).toEqual([]);
+	await search.fill('why hire');
+	await page.keyboard.press('Enter');
+	await expect(page).toHaveURL(/\/why-hire-me$/);
+});
+
+test('case study cards link to their write-ups', async ({ page }) => {
+	await page.goto('/');
+	await page
+		.locator('#recoup')
+		.getByRole('link', { name: /case study/i })
+		.click();
+	await expect(page.getByRole('heading', { level: 1, name: 'Recoup' })).toBeVisible();
 });

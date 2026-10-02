@@ -252,10 +252,10 @@ draft: false
 - [ ] Every project card has a working link and at least one concrete number
 - [ ] Résumé PDF is current
 - [ ] OG image previews correctly (check with opengraph.xyz or the LinkedIn Post Inspector)
-- [ ] Mobile: no horizontal scroll, dot nav hidden, ASCII hero scales down (or switches to a smaller figlet font)
-- [ ] `prefers-reduced-motion` turns off the glitch effect
-- [ ] Lighthouse ≥ 95, axe has no violations
-- [ ] 404 page works
+- [x] Mobile: no horizontal scroll, dot nav hidden, ASCII hero scales down (or switches to a smaller figlet font)
+- [x] `prefers-reduced-motion` turns off the glitch effect
+- [x] Lighthouse ≥ 95, axe has no violations — 2026-10-02, local production build: performance 98 mobile / 100 desktop, accessibility 100, SEO 100, best practices 96 (only the `/_vercel/*` scripts 404 locally). axe runs in `site.e2e.ts` on every page
+- [x] 404 page works
 - [ ] Analytics receiving events
 
 ---

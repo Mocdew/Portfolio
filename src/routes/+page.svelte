@@ -7,6 +7,7 @@
 	import Seo from '$lib/components/Seo.svelte';
 	import { categories, projects, type Category } from '$lib/data/projects';
 	import { education, experience, site, skills } from '$lib/data/site';
+	import { copy, palette } from '$lib/ui.svelte';
 
 	const sections = [
 		{ id: 'hero', label: 'Top' },
@@ -15,6 +16,19 @@
 		{ id: 'toolkit', label: 'Toolkit' },
 		{ id: 'contact', label: 'Contact' }
 	];
+
+	// The hero lines type themselves out once (CSS only; see .type in layout.css). Each line
+	// starts when the previous one finishes.
+	const tagline = [
+		'I build machine learning for fintech and ship it as software.',
+		'APIs, tests and model cards — not just notebooks.',
+		"Don't take my word for it. Look below."
+	];
+	const msPerChar = 22;
+	const typed = tagline.map((text, i) => ({
+		text,
+		delay: 300 + tagline.slice(0, i).reduce((t, line) => t + line.length * msPerChar + 150, 0)
+	}));
 
 	// Only offer filters that match at least one project.
 	const filters = categories.filter((c) => projects.some((p) => p.category === c));
@@ -36,9 +50,16 @@
 	</p>
 
 	<div class="mt-6 space-y-1 text-sm leading-relaxed text-fg sm:text-[0.95rem]">
-		<p>I build machine learning for fintech and ship it as software.</p>
-		<p>APIs, tests and model cards — not just notebooks.</p>
-		<p class="cursor text-muted">Don't take my word for it. Look below.</p>
+		{#each typed as { text, delay }, i (text)}
+			<p class={i === typed.length - 1 ? 'cursor text-muted' : ''}>
+				<span
+					class="type"
+					style:--n={text.length}
+					style:--ms="{text.length * msPerChar}ms"
+					style:--delay="{delay}ms">{text}</span
+				>
+			</p>
+		{/each}
 	</div>
 
 	<nav aria-label="Primary" class="mt-8 flex flex-wrap justify-center gap-x-2 gap-y-2 text-sm">
@@ -49,6 +70,15 @@
 			<span class="text-dim" aria-hidden="true">·</span>
 			<a href={site.resume} class="font-semibold underline-offset-4 hover:underline">Résumé</a>
 		{/if}
+		<span class="text-dim" aria-hidden="true">·</span>
+		<button
+			type="button"
+			onclick={() => (palette.open = true)}
+			class="inline-flex items-center gap-1 text-muted hover:text-fg"
+		>
+			<kbd class="rounded border border-hairline px-1.5 text-xs">⌘K</kbd>
+			<span class="sr-only">Open the quick menu</span>
+		</button>
 	</nav>
 
 	<ul class="mt-6 flex gap-5 text-muted" aria-label="Elsewhere">
@@ -71,7 +101,7 @@
 </section>
 
 <section id="projects" aria-labelledby="projects-heading" class="py-12">
-	<SectionHeading id="projects" title="Projects" meta={String(projects.length)} />
+	<SectionHeading id="projects" index={1} title="Projects" meta={String(projects.length)} />
 
 	<div class="rounded-md border border-dashed border-hairline p-5 text-sm leading-relaxed">
 		<p class="mb-3 text-[11px] tracking-[0.2em] text-dim uppercase">Honest bit</p>
@@ -132,7 +162,7 @@
 </section>
 
 <section id="experience" aria-labelledby="experience-heading" class="py-12">
-	<SectionHeading id="experience" title="Experience" />
+	<SectionHeading id="experience" index={2} title="Experience" />
 	<ol class="relative space-y-8 border-l border-hairline pl-6">
 		{#each experience as job (job.org)}
 			<li class="relative">
@@ -180,7 +210,7 @@
 </section>
 
 <section id="toolkit" aria-labelledby="toolkit-heading" class="py-12">
-	<SectionHeading id="toolkit" title="Toolkit" />
+	<SectionHeading id="toolkit" index={3} title="Toolkit" />
 	<dl class="grid gap-x-8 gap-y-5 sm:grid-cols-[12rem_1fr]">
 		{#each skills as { group, items } (group)}
 			<dt class="text-xs tracking-wider text-dim uppercase sm:pt-1">{group}</dt>
@@ -194,7 +224,7 @@
 </section>
 
 <section id="contact" aria-labelledby="contact-heading" class="py-12 pb-20">
-	<SectionHeading id="contact" title="Contact" />
+	<SectionHeading id="contact" index={4} title="Contact" />
 	<p class="font-sans text-fg">
 		Looking for a machine learning role building reliable AI features for fintech and startup
 		products.
@@ -208,6 +238,13 @@
 			<Icon name="mail" size={15} />
 			{site.email}
 		</a>
+		<button
+			type="button"
+			onclick={() => copy(site.email, 'Email address')}
+			class="inline-flex items-center gap-2 rounded border border-hairline px-4 py-2 text-muted hover:border-muted hover:text-fg"
+		>
+			<Icon name="copy" size={15} /> Copy email
+		</button>
 		<a
 			href={site.socials.linkedin}
 			class="inline-flex items-center gap-2 rounded border border-hairline px-4 py-2 text-muted hover:border-muted hover:text-fg"

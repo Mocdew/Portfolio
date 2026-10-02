@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Project } from '$lib/data/projects';
+	import { caseStudyHref, type Project } from '$lib/data/projects';
 	import Icon from './Icon.svelte';
 
 	let {
@@ -88,8 +88,16 @@
 		</ul>
 	</details>
 
-	{#if links.length}
-		<div class="mt-auto flex flex-wrap justify-end gap-x-4 gap-y-2 pt-4 text-sm">
+	{#if links.length || project.caseStudy}
+		<div class="mt-auto flex flex-wrap items-center justify-end gap-x-4 gap-y-2 pt-4 text-sm">
+			{#if project.caseStudy}
+				<a
+					href={caseStudyHref(project)}
+					class="mr-auto inline-flex items-center gap-1 font-semibold text-accent underline-offset-4 hover:underline"
+				>
+					Read the case study <span aria-hidden="true">→</span>
+				</a>
+			{/if}
 			{#each links as [label, href] (label)}
 				<a
 					{href}

@@ -3,6 +3,13 @@
 
 	let { sections }: { sections: { id: string; label: string }[] } = $props();
 	let active = $state('');
+	let progress = $state(0);
+
+	// Sections after the first are numbered to match their // 01 headings.
+	const current = $derived.by(() => {
+		const i = sections.findIndex((s) => s.id === active);
+		return i > 0 ? { number: String(i).padStart(2, '0'), label: sections[i].label } : null;
+	});
 
 	onMount(() => {
 		const observer = new IntersectionObserver(
@@ -18,9 +25,46 @@
 			const el = document.getElementById(id);
 			if (el) observer.observe(el);
 		}
-		return () => observer.disconnect();
+
+		let frame = 0;
+		const onScroll = () => {
+			cancelAnimationFrame(frame);
+			frame = requestAnimationFrame(() => {
+				const max = document.documentElement.scrollHeight - innerHeight;
+				progress = max > 0 ? Math.min(1, scrollY / max) : 0;
+			});
+		};
+		onScroll();
+		addEventListener('scroll', onScroll, { passive: true });
+
+		return () => {
+			observer.disconnect();
+			removeEventListener('scroll', onScroll);
+			cancelAnimationFrame(frame);
+		};
 	});
 </script>
+
+<!-- Phones and tablets: a slim bar naming the current section, with reading progress. -->
+<div
+	class="nav-glass fixed inset-x-0 top-0 z-50 border-b border-hairline transition-transform duration-200 lg:hidden
+		{current ? 'translate-y-0' : '-translate-y-full'}"
+	aria-hidden="true"
+>
+	<a
+		href="#hero"
+		tabindex="-1"
+		class="flex items-center gap-2 px-4 py-2 text-xs tracking-[0.2em] uppercase"
+	>
+		<span class="tracking-normal text-dim tabular-nums">// {current?.number}</span>
+		<span class="text-fg">{current?.label}</span>
+		<span class="ml-auto tracking-normal text-dim normal-case">top ↑</span>
+	</a>
+	<span
+		class="absolute bottom-0 left-0 h-px w-full origin-left bg-accent"
+		style:transform="scaleX({progress})"
+	></span>
+</div>
 
 <nav
 	aria-label="Sections"
