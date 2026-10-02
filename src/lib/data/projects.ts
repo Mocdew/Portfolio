@@ -100,7 +100,7 @@ export const projects: Project[] = [
 		description:
 			'Kaggle qualification hackathon for the DSN Bootcamp. Error analysis showed sales ≈ price × store turnover, so a store-ratio model beat tuned LightGBM, XGBoost and CatBoost under repeated, paired 5-fold cross-validation. Store-format priors cut error on unseen stores, and the 80% prediction intervals hit 79.7% actual coverage. Shipped as a tested package with GitHub Actions CI.',
 		metrics: [
-			'placed 40th',
+			'placed 27th',
 			'CV RMSE 1,070.8 vs 1,097–1,101',
 			'unseen stores 1,436.6 → 1,171.5',
 			'79.7% interval coverage'
