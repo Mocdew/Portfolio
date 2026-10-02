@@ -26,6 +26,12 @@
 		overflow: hidden;
 	}
 
+	:global([data-theme='light']) .ascii {
+		text-shadow:
+			-1px 0 rgb(220 40 40 / 0.25),
+			1px 0 rgb(20 140 220 / 0.25);
+	}
+
 	.ascii-fallback {
 		font-size: clamp(2rem, 9vw, 4.5rem);
 		font-weight: 800;

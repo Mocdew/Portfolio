@@ -16,9 +16,27 @@
 	--font-mono: 'Geist Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* Light theme: the warm neutrals and blue of the Recoup console's light mode. Recoup's lightest
+   grey (#85837d) and its blue (#2a78d6) are a little faint for small text, so dim and accent use
+   the darker steps that keep 4.5:1 contrast on both the page and the cards. */
+:root[data-theme='light'] {
+	--color-bg: #f6f6f3;
+	--color-panel: #ffffff;
+	--color-hairline: #e6e5df;
+	--color-fg: #0b0b0b;
+	--color-muted: #52514e;
+	--color-dim: #706e69;
+	--color-accent: #1c5cab;
+	--scanline: rgb(0 0 0 / 0.022);
+	--glass: rgb(255 255 255 / 0.7);
+	color-scheme: light;
+}
+
 @layer base {
 	html {
 		color-scheme: dark;
+		--scanline: rgb(255 255 255 / 0.018);
+		--glass: rgb(12 11 11 / 0.6);
 		scroll-behavior: smooth;
 		scroll-padding-top: 3.5rem;
 	}
@@ -64,7 +82,7 @@ body::after {
 		to bottom,
 		transparent 0,
 		transparent 2px,
-		rgb(255 255 255 / 0.018) 3px
+		var(--scanline) 3px
 	);
 }
 
@@ -156,4 +174,15 @@ body::after {
 			color: var(--color-fg);
 		}
 	}
+}
+
+/* Images that come in a dark and a light version (see Project.image.srcLight). */
+:root[data-theme='light'] .dark-only,
+:root:not([data-theme='light']) .light-only {
+	display: none;
+}
+
+.nav-glass {
+	background: var(--glass);
+	backdrop-filter: blur(10px);
 }

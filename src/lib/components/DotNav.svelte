@@ -88,10 +88,3 @@
 		</a>
 	{/each}
 </nav>
-
-<style>
-	.nav-glass {
-		background: rgb(12 11 11 / 0.6);
-		backdrop-filter: blur(10px);
-	}
-</style>

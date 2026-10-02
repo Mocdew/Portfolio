@@ -17,8 +17,9 @@ export type Project = {
 	featured?: boolean;
 	/** Has a long-form write-up at /projects/<slug> (src/routes/projects/<slug>/+page.svelte). */
 	caseStudy?: boolean;
-	/** A real chart or screenshot from the project, served from /static/projects. */
-	image?: { src: string; alt: string; width: number; height: number };
+	/** A real chart or screenshot from the project, served from /static/projects. `srcLight` is
+	 * the same image for the light theme, at the same size. */
+	image?: { src: string; srcLight?: string; alt: string; width: number; height: number };
 	private?: boolean;
 };
 
@@ -109,6 +110,7 @@ export const projects: Project[] = [
 		category: 'Forecasting',
 		image: {
 			src: '/projects/dsn-hackathon.webp',
+			srcLight: '/projects/dsn-hackathon-light.webp',
 			alt: 'Bar chart of sales per unit of product price by store: supermarkets sell 14–26× a product’s price, the two corner shops about 2.4×.',
 			width: 1200,
 			height: 689
@@ -127,6 +129,7 @@ export const projects: Project[] = [
 		category: 'Forecasting',
 		image: {
 			src: '/projects/brent-volatility.webp',
+			srcLight: '/projects/brent-volatility-light.webp',
 			alt: 'Line chart of 21-day realised Brent volatility: the predicted series tracks the actual one closely, including the 2020 spike.',
 			width: 1145,
 			height: 449
@@ -145,6 +148,7 @@ export const projects: Project[] = [
 		category: 'Forecasting',
 		image: {
 			src: '/projects/cpi-inflation.webp',
+			srcLight: '/projects/cpi-inflation-light.webp',
 			alt: 'Line chart of US CPI year-on-year inflation with ARIMA, SARIMA and LightGBM forecasts against actuals for the test window.',
 			width: 1132,
 			height: 547
@@ -187,6 +191,7 @@ export const projects: Project[] = [
 		category: 'Segmentation',
 		image: {
 			src: '/projects/customer-segmentation.webp',
+			srcLight: '/projects/customer-segmentation-light.webp',
 			alt: 'Scatter plot of cardholders on the first two principal components, coloured by K-Means cluster.',
 			width: 999,
 			height: 547

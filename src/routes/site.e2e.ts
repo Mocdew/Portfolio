@@ -66,19 +66,26 @@ test('social preview image is declared and served', async ({ page, request }) =>
 
 const pages = ['/', '/why-hire-me', ...projects.filter((p) => p.caseStudy).map(caseStudyHref)];
 
-for (const path of pages) {
-	test(`${path} has no axe accessibility violations`, async ({ page }) => {
-		await page.goto(path);
-		const { violations } = await new AxeBuilder({ page }).analyze();
-		expect(violations.map((v) => `${v.id}: ${v.nodes.length} × ${v.help}`)).toEqual([]);
-	});
+// The theme follows the OS by default, so the colour scheme picks which palette axe checks.
+for (const colorScheme of ['dark', 'light'] as const) {
+	for (const path of pages) {
+		test(`${path} has no axe accessibility violations (${colorScheme})`, async ({ page }) => {
+			await page.emulateMedia({ colorScheme });
+			await page.goto(path);
+			const { violations } = await new AxeBuilder({ page }).analyze();
+			expect(violations.map((v) => `${v.id}: ${v.nodes.length} × ${v.help}`)).toEqual([]);
+		});
+	}
 }
 
 test('command palette opens with the keyboard, searches and navigates', async ({ page }) => {
 	await page.goto('/');
-	await page.keyboard.press('ControlOrMeta+k');
 	const search = page.getByRole('combobox', { name: /search/i });
-	await expect(search).toBeFocused();
+	// The shortcut listener attaches on hydration, so retry until the palette is open.
+	await expect(async () => {
+		if (!(await page.locator('dialog[open]').count())) await page.keyboard.press('ControlOrMeta+k');
+		await expect(search).toBeFocused({ timeout: 1000 });
+	}).toPass();
 	const { violations } = await new AxeBuilder({ page }).include('dialog').analyze();
 	expect(violations.map((v) => v.id)).toEqual([]);
 	await search.fill('why hire');
@@ -93,4 +100,37 @@ test('case study cards link to their write-ups', async ({ page }) => {
 		.getByRole('link', { name: /case study/i })
 		.click();
 	await expect(page.getByRole('heading', { level: 1, name: 'Recoup' })).toBeVisible();
+});
+
+test('theme follows the system until the visitor picks one', async ({ page }) => {
+	const html = page.locator('html');
+	await page.emulateMedia({ colorScheme: 'light' });
+	await page.goto('/');
+	await expect(html).toHaveAttribute('data-theme', 'light');
+	await page.emulateMedia({ colorScheme: 'dark' });
+	await expect(html).not.toHaveAttribute('data-theme');
+	await expect(page.getByRole('button', { name: 'Match system theme' })).toHaveAttribute(
+		'aria-pressed',
+		'true'
+	);
+});
+
+test('a picked theme overrides the system and survives a reload', async ({ page }) => {
+	const html = page.locator('html');
+	await page.emulateMedia({ colorScheme: 'dark' });
+	await page.goto('/');
+	await page.getByRole('button', { name: 'Light theme' }).click();
+	await expect(html).toHaveAttribute('data-theme', 'light');
+	await page.reload();
+	await expect(html).toHaveAttribute('data-theme', 'light');
+
+	await page.emulateMedia({ colorScheme: 'light' });
+	await page.getByRole('button', { name: 'Dark theme' }).click();
+	await expect(html).not.toHaveAttribute('data-theme');
+	await page.reload();
+	await expect(html).not.toHaveAttribute('data-theme');
+	await expect(page.getByRole('button', { name: 'Dark theme' })).toHaveAttribute(
+		'aria-pressed',
+		'true'
+	);
 });

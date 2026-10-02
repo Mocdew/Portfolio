@@ -2,6 +2,7 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import CommandPalette from '$lib/components/CommandPalette.svelte';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import Toast from '$lib/components/Toast.svelte';
 	import { site } from '$lib/data/site';
 	import { palette } from '$lib/ui.svelte';
@@ -21,7 +22,11 @@
 	Skip to content
 </a>
 
-<div class="mx-auto flex min-h-screen max-w-3xl flex-col md:border-x md:border-hairline">
+<div class="relative mx-auto flex min-h-screen max-w-3xl flex-col md:border-x md:border-hairline">
+	<header class="absolute top-4 right-4 z-10 sm:right-8">
+		<ThemeToggle />
+	</header>
+
 	<main id="main" class="flex-1 px-4 sm:px-8">
 		{@render children()}
 	</main>

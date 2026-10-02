@@ -3,7 +3,7 @@
 	import { resolve } from '$app/paths';
 	import { caseStudyHref, projects } from '$lib/data/projects';
 	import { site } from '$lib/data/site';
-	import { copy, palette } from '$lib/ui.svelte';
+	import { copy, palette, setTheme } from '$lib/ui.svelte';
 
 	type Command = { id: string; group: string; label: string; hint?: string; run: () => void };
 
@@ -53,6 +53,14 @@
 		...(site.resume
 			? [{ id: 'resume', group: 'Actions', label: 'Open résumé (PDF)', run: external(site.resume) }]
 			: []),
+		{ id: 'theme-light', group: 'Actions', label: 'Light theme', run: () => setTheme('light') },
+		{ id: 'theme-dark', group: 'Actions', label: 'Dark theme', run: () => setTheme('dark') },
+		{
+			id: 'theme-system',
+			group: 'Actions',
+			label: 'Match system theme',
+			run: () => setTheme('system')
+		},
 		{ id: 'github', group: 'Actions', label: 'GitHub', run: external(site.socials.github) },
 		{ id: 'linkedin', group: 'Actions', label: 'LinkedIn', run: external(site.socials.linkedin) }
 	];

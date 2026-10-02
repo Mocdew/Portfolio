@@ -21,17 +21,20 @@
 
 {#snippet figure(image: NonNullable<Project['image']>)}
 	<figure class="overflow-hidden rounded border border-hairline bg-panel">
-		<a href={image.src} target="_blank" rel="noopener" class="block" aria-label="Open full size">
-			<img
-				src={image.src}
-				alt={image.alt}
-				width={image.width}
-				height={image.height}
-				loading="lazy"
-				decoding="async"
-				class="h-auto w-full object-contain {featured ? 'max-h-[28rem]' : 'max-h-72'}"
-			/>
-		</a>
+		<!-- With a light version, each theme shows its own; the hidden one is never downloaded. -->
+		{#each image.srcLight ? [[image.src, 'dark-only'], [image.srcLight, 'light-only']] : [[image.src, '']] as [src, only] (src)}
+			<a href={src} target="_blank" rel="noopener" class="block {only}" aria-label="Open full size">
+				<img
+					{src}
+					alt={image.alt}
+					width={image.width}
+					height={image.height}
+					loading="lazy"
+					decoding="async"
+					class="h-auto w-full object-contain {featured ? 'max-h-[28rem]' : 'max-h-72'}"
+				/>
+			</a>
+		{/each}
 	</figure>
 {/snippet}
 
