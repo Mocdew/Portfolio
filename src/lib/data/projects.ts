@@ -32,16 +32,23 @@ export const projects: Project[] = [
 		slug: 'recoup',
 		title: 'Recoup',
 		language: 'Python',
-		hook: 'Stop retrying failed payments on a fixed schedule.',
+		hook: 'Retry failed payments when they will actually go through.',
 		description:
-			'Built during my ML internship at Notzero Technologies. Decides when to retry a failed subscription payment, how many times, and when to ask for a new card — replacing the standard 1/3/7-day retry ladder. Combines a mixture-cure hazard model (separating "customer is gone" from "not funded yet"), shared across merchants so small businesses with little history still benefit, with an exact multi-step schedule planner, Thompson-sampling exploration and off-policy evaluation. A safety gate blocks rollout until real-world evidence confirms the gain. Measured in simulation against the fixed ladder.',
+			'Built during my ML internship at Notzero Technologies. When a subscription payment fails, Recoup plans the whole retry schedule — when to retry, how many times, and when to stop and ask for a new card — instead of replaying the fixed 1/3/7-day ladder. A mixture-cure hazard model separates "customer is gone" from "not funded yet" and is pooled across merchants, so small ones still benefit; an exact planner values every candidate schedule in closed form, and Thompson-sampled exploration logs the propensities that cross-fitted, doubly-robust evaluation needs. A deployment gate keeps the old ladder in charge until that evidence clears: in a 45-day simulated rollout it held for six weeks, then switched. Ships with an ops CLI and a FastAPI + React operator console. All results are from simulation.',
 		metrics: [
 			'+31% recovered per failed invoice',
 			'$15.93 vs $12.12',
-			'+20–35% across 6 stress scenarios',
+			'+20–35% across 6 perturbed worlds',
 			'+19% for small merchants'
 		],
-		tags: ['SciPy', 'Survival analysis', 'Contextual bandits', 'Simulation'],
+		tags: [
+			'SciPy',
+			'Survival analysis',
+			'Contextual bandits',
+			'Off-policy evaluation',
+			'FastAPI',
+			'React'
+		],
 		links: { github: gh('Recoup'), demo: 'https://recoup-zeta-ten.vercel.app/' }
 	},
 	{
