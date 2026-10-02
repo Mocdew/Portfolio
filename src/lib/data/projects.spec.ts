@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { renderAscii } from '$lib/components/AsciiName.svelte';
+import { renderAscii } from '$lib/ascii';
 import { projects } from './projects';
 import { site } from './site';
 

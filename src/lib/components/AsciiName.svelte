@@ -1,26 +1,6 @@
-<script lang="ts" module>
-	// "ANSI Shadow" figlet glyphs. Each glyph is 6 rows of equal width.
-	// Add letters here if the name changes (generate with: figlet -f "ANSI Shadow" X).
-	const GLYPHS: Record<string, string[]> = {
-		D: ['██████╗ ', '██╔══██╗', '██║  ██║', '██║  ██║', '██████╔╝', '╚═════╝ '],
-		E: ['███████╗', '██╔════╝', '█████╗  ', '██╔══╝  ', '███████╗', '╚══════╝'],
-		I: ['██╗', '██║', '██║', '██║', '██║', '╚═╝'],
-		L: ['██╗     ', '██║     ', '██║     ', '██║     ', '███████╗', '╚══════╝'],
-		M: ['███╗   ███╗', '████╗ ████║', '██╔████╔██║', '██║╚██╔╝██║', '██║ ╚═╝ ██║', '╚═╝     ╚═╝'],
-		O: [' ██████╗ ', '██╔═══██╗', '██║   ██║', '██║   ██║', '╚██████╔╝', ' ╚═════╝ '],
-		U: ['██╗   ██╗', '██║   ██║', '██║   ██║', '██║   ██║', '╚██████╔╝', ' ╚═════╝ ']
-	};
-
-	export function renderAscii(text: string): string | null {
-		const letters = [...text.toUpperCase()];
-		if (!letters.every((ch) => ch in GLYPHS)) return null;
-		return Array.from({ length: 6 }, (_, row) =>
-			letters.map((ch) => GLYPHS[ch][row]).join('')
-		).join('\n');
-	}
-</script>
-
 <script lang="ts">
+	import { renderAscii } from '$lib/ascii';
+
 	let { text }: { text: string } = $props();
 	const art = $derived(renderAscii(text));
 </script>

@@ -45,3 +45,20 @@ test('unknown routes show the 404 page', async ({ page }) => {
 	expect(res?.status()).toBe(404);
 	await expect(page.getByText('no such file or directory')).toBeVisible();
 });
+
+test('category filter narrows the project list and All restores it', async ({ page }) => {
+	await page.goto('/');
+	const forecasting = projects.filter((p) => p.category === 'Forecasting').length;
+	await page.getByRole('button', { name: /^Forecasting/ }).click();
+	await expect(page.locator('#projects article')).toHaveCount(forecasting);
+	await page.getByRole('button', { name: /^All/ }).click();
+	await expect(page.locator('#projects article')).toHaveCount(projects.length);
+});
+
+test('social preview image is declared and served', async ({ page, request }) => {
+	await page.goto('/');
+	const og = await page.locator('meta[property="og:image"]').getAttribute('content');
+	const res = await request.get(new URL(og!).pathname);
+	expect(res.status()).toBe(200);
+	expect(res.headers()['content-type']).toContain('image/png');
+});

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
 	import Seo from '$lib/components/Seo.svelte';
-	import { experience, site } from '$lib/data/site';
+	import { education, experience, site } from '$lib/data/site';
 
 	const reasons = [
 		{
@@ -67,8 +67,8 @@
 				</li>
 			{/each}
 			<li class="flex flex-wrap justify-between gap-x-4">
-				<span class="text-fg">B.Sc. Computer Science — Covenant University</span>
-				<span class="text-sm text-muted">2021 – 2025</span>
+				<span class="text-fg">{education.degree} — {education.school}</span>
+				<span class="text-sm text-muted">{education.dates}</span>
 			</li>
 		</ul>
 	</div>

@@ -2,7 +2,11 @@
 	import type { Project } from '$lib/data/projects';
 	import Icon from './Icon.svelte';
 
-	let { project, index }: { project: Project; index: number } = $props();
+	let {
+		project,
+		index,
+		featured = false
+	}: { project: Project; index: number; featured?: boolean } = $props();
 	const number = $derived(String(index + 1).padStart(2, '0'));
 	const links = $derived(
 		(
@@ -15,21 +19,43 @@
 	);
 </script>
 
+{#snippet figure(image: NonNullable<Project['image']>)}
+	<figure class="overflow-hidden rounded border border-hairline bg-panel">
+		<a href={image.src} target="_blank" rel="noopener" class="block" aria-label="Open full size">
+			<img
+				src={image.src}
+				alt={image.alt}
+				width={image.width}
+				height={image.height}
+				loading="lazy"
+				decoding="async"
+				class="h-auto w-full object-contain {featured ? 'max-h-[28rem]' : 'max-h-72'}"
+			/>
+		</a>
+	</figure>
+{/snippet}
+
 <article
 	id={project.slug}
-	class="group rounded-md border border-hairline bg-panel p-5 transition-colors hover:border-muted/40 sm:p-6"
+	class="flex h-full flex-col rounded-md border border-hairline bg-panel transition-colors hover:border-muted/40
+		{featured ? 'p-5 sm:p-6' : 'p-4 sm:p-5'}"
 >
+	{#if featured && project.image}
+		<div class="mb-5">{@render figure(project.image)}</div>
+	{/if}
+
 	<header class="flex items-baseline gap-3">
 		<span class="text-sm text-dim tabular-nums">{number}</span>
-		<h3 class="text-lg font-semibold text-fg">{project.title}</h3>
+		<h3 class="font-semibold text-fg {featured ? 'text-lg' : 'text-base'}">{project.title}</h3>
 		{#if project.private}
 			<span class="rounded border border-hairline px-1.5 text-[11px] text-muted">private</span>
 		{/if}
-		<span class="ml-auto text-xs text-muted">{project.language}</span>
+		<span class="ml-auto text-xs whitespace-nowrap text-muted">{project.language}</span>
 	</header>
 
-	<p class="mt-3 font-sans font-medium text-fg">{project.hook}</p>
-	<p class="mt-2 font-sans text-[0.93rem] leading-relaxed text-muted">{project.description}</p>
+	<p class="mt-3 font-sans font-medium text-fg {featured ? '' : 'text-[0.95rem]'}">
+		{project.hook}
+	</p>
 
 	{#if project.metrics.length}
 		<ul class="mt-4 flex flex-wrap gap-2" aria-label="Results">
@@ -41,26 +67,40 @@
 		</ul>
 	{/if}
 
-	<div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3">
-		<ul class="flex flex-wrap gap-1.5" aria-label="Tech">
+	<details class="group/details mt-4">
+		<summary
+			class="inline-flex cursor-pointer list-none items-center gap-1.5 text-xs tracking-wider text-muted uppercase select-none hover:text-fg [&::-webkit-details-marker]:hidden"
+		>
+			<span
+				class="inline-block transition-transform group-open/details:rotate-90"
+				aria-hidden="true">▸</span
+			>
+			How it works
+		</summary>
+		<p class="mt-3 font-sans text-[0.93rem] leading-relaxed text-muted">{project.description}</p>
+		{#if !featured && project.image}
+			<div class="mt-4">{@render figure(project.image)}</div>
+		{/if}
+		<ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Tech">
 			{#each project.tags as tag (tag)}
 				<li class="rounded bg-hairline/60 px-2 py-0.5 text-[11px] text-muted">{tag}</li>
 			{/each}
 		</ul>
-		{#if links.length}
-			<div class="ml-auto flex gap-4 text-sm">
-				{#each links as [label, href] (label)}
-					<a
-						{href}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-flex items-center gap-1 text-fg underline-offset-4 hover:underline"
-					>
-						{label}<Icon name="arrow-up-right" size={13} />
-						<span class="sr-only">(opens in a new tab)</span>
-					</a>
-				{/each}
-			</div>
-		{/if}
-	</div>
+	</details>
+
+	{#if links.length}
+		<div class="mt-auto flex flex-wrap justify-end gap-x-4 gap-y-2 pt-4 text-sm">
+			{#each links as [label, href] (label)}
+				<a
+					{href}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center gap-1 text-fg underline-offset-4 hover:underline"
+				>
+					{label}<Icon name="arrow-up-right" size={13} />
+					<span class="sr-only">(opens in a new tab)</span>
+				</a>
+			{/each}
+		</div>
+	{/if}
 </article>
