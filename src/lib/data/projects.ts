@@ -42,7 +42,7 @@ export const projects: Project[] = [
 			'+19% for small merchants'
 		],
 		tags: ['SciPy', 'Survival analysis', 'Contextual bandits', 'Simulation'],
-		links: { github: gh('Recoup') }
+		links: { github: gh('Recoup'), demo: 'https://recoup-zeta-ten.vercel.app/' }
 	},
 	{
 		slug: 'credipulse',
