@@ -56,6 +56,37 @@ test('category filter narrows the project list and All restores it', async ({ pa
 	await expect(page.locator('#projects article')).toHaveCount(projects.length);
 });
 
+test('a link to a project the filter hides clears the filter', async ({ page }) => {
+	await page.goto('/');
+	await page.getByRole('button', { name: /^Forecasting/ }).click();
+	await expect(page.locator('#recoup')).toHaveCount(0);
+	await page
+		.locator('#experience')
+		.getByRole('link', { name: /See the project/ })
+		.click();
+	await expect(page.locator('#recoup')).toBeInViewport();
+	await expect(page.getByRole('button', { name: /^All/ })).toHaveAttribute('aria-pressed', 'true');
+	await expect(page.locator('#projects article')).toHaveCount(projects.length);
+	// Again with #recoup already in the URL, where SvelteKit does the scrolling instead.
+	await page.getByRole('button', { name: /^Forecasting/ }).click();
+	await page
+		.locator('#experience')
+		.getByRole('link', { name: /See the project/ })
+		.click();
+	await expect(page.locator('#recoup')).toBeInViewport();
+});
+
+test('the command palette can jump to a project the filter hides', async ({ page }) => {
+	await page.goto('/');
+	await page.getByRole('button', { name: /^Payments/ }).click();
+	await expect(page.locator('#credipulse')).toHaveCount(0);
+	await page.keyboard.press('ControlOrMeta+k');
+	await page.getByRole('combobox', { name: /search/i }).fill('CrediPulse');
+	await page.keyboard.press('Enter');
+	await expect(page).toHaveURL(/\/#credipulse$/);
+	await expect(page.locator('#credipulse')).toBeInViewport();
+});
+
 test('social preview image is declared and served', async ({ page, request }) => {
 	await page.goto('/');
 	const og = await page.locator('meta[property="og:image"]').getAttribute('content');
