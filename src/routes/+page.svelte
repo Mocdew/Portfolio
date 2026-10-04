@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { flushSync } from 'svelte';
+	import { beforeNavigate } from '$app/navigation';
 	import AsciiName from '$lib/components/AsciiName.svelte';
 	import DotNav from '$lib/components/DotNav.svelte';
 	import Icon from '$lib/components/Icon.svelte';
@@ -36,6 +38,21 @@
 	const shown = $derived(filter ? projects.filter((p) => p.category === filter) : projects);
 	const featured = $derived(shown.filter((p) => p.featured));
 	const rest = $derived(shown.filter((p) => !p.featured));
+
+	// Links and the command palette jump to a project by its card's id. If the filter is hiding
+	// that card the jump would land nowhere, so show every project before it scrolls.
+	function reveal(hash: string) {
+		const slug = hash.slice(1);
+		if (projects.some((p) => p.slug === slug) && !shown.some((p) => p.slug === slug)) {
+			filter = null;
+			flushSync();
+		}
+	}
+
+	// The command palette jumps with goto(), which scrolls to the card once this has run.
+	beforeNavigate(({ to }) => {
+		if (to) reveal(to.url.hash);
+	});
 </script>
 
 <Seo />
@@ -187,6 +204,7 @@
 				{#if job.project}
 					<a
 						href="#{job.project}"
+						onclick={(e) => reveal(e.currentTarget.hash)}
 						class="mt-3 inline-block text-sm text-fg underline-offset-4 hover:underline"
 					>
 						See the project ↑
