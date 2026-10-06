@@ -28,7 +28,7 @@
 	);
 </script>
 
-<Seo title="{project.title} — case study" description="{project.hook} {summary}" />
+<Seo title="{project.title} case study" description="{project.hook} {summary}" />
 
 <article class="py-16 sm:py-20">
 	<a href="/#{project.slug}" class="text-sm text-muted hover:text-fg">← all projects</a>
@@ -75,7 +75,7 @@
 					<li>
 						<a href={caseStudyHref(other)} class="group inline-flex items-baseline gap-2">
 							<span class="font-semibold text-fg group-hover:underline">{other.title}</span>
-							<span class="font-sans text-sm text-muted">— {other.hook}</span>
+							<span class="font-sans text-sm text-muted">{other.hook}</span>
 						</a>
 					</li>
 				{/each}

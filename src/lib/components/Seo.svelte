@@ -5,7 +5,7 @@
 	let { title, description = site.description }: { title?: string; description?: string } =
 		$props();
 
-	const fullTitle = $derived(title ? `${title} — ${site.name}` : `${site.name} — ${site.role}`);
+	const fullTitle = $derived(title ? `${title} | ${site.name}` : `${site.name} | ${site.role}`);
 	const canonical = $derived(new URL(page.url.pathname, site.url).href);
 	// Regenerate with `pnpm og` (scripts/og-image.ts) when the name or description changes.
 	const image = new URL('/og.png', site.url).href;
@@ -26,7 +26,7 @@
 	<meta property="og:image" content={image} />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
-	<meta property="og:image:alt" content="{site.name} — {site.role}" />
+	<meta property="og:image:alt" content="{site.name}, {site.role}" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={fullTitle} />
 	<meta name="twitter:description" content={description} />

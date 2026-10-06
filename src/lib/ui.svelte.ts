@@ -23,7 +23,7 @@ export async function copy(text: string, what: string) {
 		await navigator.clipboard.writeText(text);
 		toast.show(`${what} copied`);
 	} catch {
-		toast.show(`Couldn't copy — ${text}`, false);
+		toast.show(`Couldn't copy: ${text}`, false);
 	}
 }
 

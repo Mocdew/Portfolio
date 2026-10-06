@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 </script>
 
-<svelte:head><title>{page.status} — not found</title></svelte:head>
+<svelte:head><title>{page.status} not found</title></svelte:head>
 
 <section class="py-24 text-sm">
 	<p class="text-muted">

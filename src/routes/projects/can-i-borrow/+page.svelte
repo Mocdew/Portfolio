@@ -30,7 +30,7 @@
 
 <CaseStudy
 	slug="can-i-borrow"
-	summary="A loan default risk engine trained on 255,000 consumer loans. It gives an underwriter an honest probability that a borrower will default, a recommendation priced in money, and the top reasons behind every decision — with the attributes the law forbids kept out of the model."
+	summary="A loan default risk engine trained on 255,000 consumer loans. It gives an underwriter an honest probability that a borrower will default, a recommendation priced in money, and the top reasons behind every decision, with the attributes the law forbids kept out of the model."
 >
 	<section id="problem" aria-labelledby="problem-heading">
 		<SectionHeading id="problem" index={1} title="The problem" />
@@ -95,8 +95,8 @@
 		<h3>Fair lending built in</h3>
 		<p>
 			Marital status and dependants are prohibited bases for credit decisions under ECOA and
-			Regulation B. They are kept out of the model — enforced at three points in the pipeline and by
-			a unit test — but retained separately, because measuring unfair outcomes needs them. Every
+			Regulation B. They are kept out of the model, enforced at three points in the pipeline and by
+			a unit test, but retained separately, because measuring unfair outcomes needs them. Every
 			training run screens approval rates across groups with the four-fifths rule and records any
 			flags in the model card.
 		</p>
@@ -106,7 +106,7 @@
 		<SectionHeading id="results" index={3} title="Results" />
 		<p>
 			Measured on <strong>51,070 loans the models never saw</strong>. About 11.6% of borrowers in
-			this data default — so a model that simply says "nobody defaults" is 88.4% accurate and
+			this data default, so a model that simply says "nobody defaults" is 88.4% accurate and
 			useless. That is why accuracy is not reported.
 		</p>
 		<BarChart
@@ -120,7 +120,7 @@
 		/>
 		<p>
 			At the cost-tuned threshold the model <strong>catches about 80% of defaults</strong>. Around 1
-			in 5 of the applicants it flags would actually default — a deliberate trade, because missing a
+			in 5 of the applicants it flags would actually default, a deliberate trade, because missing a
 			default costs ten times more than a second look at a good applicant.
 		</p>
 		<div class="my-6 overflow-x-auto rounded-md border border-hairline">
