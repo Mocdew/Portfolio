@@ -8,7 +8,7 @@ export const site = {
 	// Production address; used for canonical and social-preview URLs. Update if a custom domain is added.
 	url: 'https://olumide-erinfolami.vercel.app',
 	description:
-		'Machine learning engineer building credit-risk, forecasting and payments models for fintech — shipped as APIs with tests, model cards and honest limitations.',
+		'Machine learning engineer building credit-risk, forecasting and payments models for fintech, shipped as APIs with tests, model cards and honest limitations.',
 	email: 'anthonyerinfolami@gmail.com',
 	socials: {
 		github: 'https://github.com/Mocdew',
@@ -37,7 +37,7 @@ export const experience: Job[] = [
 		where: 'Nigeria (hybrid)',
 		dates: 'Mar 2026 – Sep 2026',
 		highlights: [
-			'Built Recoup, which decides when to retry a failed subscription payment, how many times, and when to ask for a new card — replacing the fixed 1/3/7-day retry rule.',
+			'Built Recoup, which decides when to retry a failed subscription payment, how many times, and when to ask for a new card, replacing the fixed 1/3/7-day retry rule.',
 			'Modelled the chance each customer can pay at each retry time with probabilistic models in Python and SciPy, shared across merchants so small businesses with little history still benefit.',
 			'Recovered 31% more revenue per failed payment than the fixed rule in simulation ($15.93 vs $12.12), and 20–35% more across six stress-test scenarios.',
 			'Added a safety gate that blocks rollout until real-world evidence confirms the gain.'

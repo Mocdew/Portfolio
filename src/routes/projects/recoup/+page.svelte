@@ -45,7 +45,7 @@
 			cancels, give up too early and the money is lost.
 		</p>
 		<p>
-			The industry default is a fixed ladder — retry after <strong>1 day, then 3, then 7</strong> — applied
+			The industry default is a fixed ladder: retry after <strong>1 day, then 3, then 7</strong>, applied
 			to everyone, whatever the reason the payment failed. "The bank's system was down" and "the account
 			is empty until payday" get exactly the same treatment.
 		</p>
@@ -112,7 +112,7 @@
 					label: 'Recoup: plan the whole schedule',
 					value: 15.93,
 					highlight: true,
-					note: '+31% — for every $100 the ladder recovers, Recoup recovers about $131'
+					note: '+31%: for every $100 the ladder recovers, Recoup recovers about $131'
 				}
 			]}
 		/>
@@ -153,7 +153,7 @@
 	<section id="rollout" aria-labelledby="rollout-heading">
 		<SectionHeading id="rollout" index={4} title="Shipping it safely" />
 		<p>
-			On historical data alone, the gate says <strong>HOLD</strong> — and that is the correct answer.
+			On historical data alone, the gate says <strong>HOLD</strong>, and that is the correct answer.
 			The old ladder almost never tried the timings the planner prefers, so old logs cannot prove it is
 			better. In a 45-day simulated rollout the gate held while evidence built up, then switched:
 		</p>

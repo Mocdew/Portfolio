@@ -96,7 +96,7 @@ export const projects: Project[] = [
 		slug: 'dsn-hackathon',
 		title: 'DSN Hackathon 2026',
 		language: 'Python',
-		hook: 'The simple model won — and I can show why.',
+		hook: 'The simple model won, and I can show why.',
 		description:
 			'Kaggle qualification hackathon for the DSN Bootcamp. Error analysis showed sales ≈ price × store turnover, so a store-ratio model beat tuned LightGBM, XGBoost and CatBoost under repeated, paired 5-fold cross-validation. Store-format priors cut error on unseen stores, and the 80% prediction intervals hit 79.7% actual coverage. Shipped as a tested package with GitHub Actions CI.',
 		metrics: [
@@ -122,7 +122,7 @@ export const projects: Project[] = [
 		language: 'Python',
 		hook: 'Four decades of oil prices, one surprising winner.',
 		description:
-			'Forecasts 39 years of Brent crude price volatility. Classical ARIMA and GARCH baselines against gradient boosting on lag features — the boosted model was far more accurate than GARCH(1,1) on the same horizon.',
+			'Forecasts 39 years of Brent crude price volatility. Classical ARIMA and GARCH baselines against gradient boosting on lag features, where the boosted model was far more accurate than GARCH(1,1) on the same horizon.',
 		metrics: ['4.6% MAPE vs 60% for GARCH(1,1)'],
 		tags: ['statsmodels', 'arch', 'LightGBM', 'Time series'],
 		links: { github: gh('Brent-Crude-Oil-Price-Volatility-Forecasting') },
@@ -160,7 +160,7 @@ export const projects: Project[] = [
 		language: 'Python',
 		hook: 'Deep learning versus the econometrics baseline.',
 		description:
-			'GRU and LSTM models in PyTorch forecasting EUR/USD realised volatility, evaluated against the HAR-RV model — the standard econometric baseline a deep model has to beat to be worth its cost.',
+			'GRU and LSTM models in PyTorch forecasting EUR/USD realised volatility, evaluated against the HAR-RV model, the standard econometric baseline a deep model has to beat to be worth its cost.',
 		metrics: ['GRU & LSTM vs HAR-RV'],
 		tags: ['PyTorch', 'GRU', 'LSTM', 'HAR-RV'],
 		links: { github: gh('EUR-USD-Volatility-Forecasting-with-Deep-Learning') },

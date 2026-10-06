@@ -11,17 +11,17 @@
 		},
 		{
 			title: 'I measure what the business actually pays for.',
-			body: 'Decision thresholds are tuned to the cost of a missed default, not to accuracy. CrediPulse sets its cutoffs in money, per loan size. Recoup, built during my internship at Notzero, is judged by dollars recovered per failed invoice — 31% more than the standard retry schedule in simulation.',
+			body: 'Decision thresholds are tuned to the cost of a missed default, not to accuracy. CrediPulse sets its cutoffs in money, per loan size. Recoup, built during my internship at Notzero, is judged by dollars recovered per failed invoice, 31% more than the standard retry schedule in simulation.',
 			proof: '#recoup'
 		},
 		{
 			title: 'I report results honestly.',
-			body: 'Confidence intervals, paired significance tests, walk-forward validation. In the DSN hackathon, error analysis showed a simple store-ratio model beat tuned LightGBM, XGBoost and CatBoost — so that is the model I shipped.',
+			body: 'Confidence intervals, paired significance tests, walk-forward validation. In the DSN hackathon, error analysis showed a simple store-ratio model beat tuned LightGBM, XGBoost and CatBoost, so that is the model I shipped.',
 			proof: '#dsn-hackathon'
 		},
 		{
 			title: 'I take fairness and regulation seriously.',
-			body: 'In both credit projects, attributes that are prohibited bases under ECOA / Regulation B are kept out of the model — and in Can I borrow.ai a unit test enforces it, and every training run screens for disparate impact and records the result in the model card.',
+			body: 'In both credit projects, attributes that are prohibited bases under ECOA / Regulation B are kept out of the model, and in Can I borrow.ai a unit test enforces it, and every training run screens for disparate impact and records the result in the model card.',
 			proof: '#credipulse'
 		}
 	];
@@ -62,12 +62,12 @@
 		<ul class="mt-3 space-y-2 font-sans">
 			{#each experience as job (job.org)}
 				<li class="flex flex-wrap justify-between gap-x-4">
-					<span class="text-fg">{job.role} — {job.org}, {job.where}</span>
+					<span class="text-fg">{job.role}, {job.org}, {job.where}</span>
 					<span class="text-sm text-muted">{job.dates}</span>
 				</li>
 			{/each}
 			<li class="flex flex-wrap justify-between gap-x-4">
-				<span class="text-fg">{education.degree} — {education.school}</span>
+				<span class="text-fg">{education.degree}, {education.school}</span>
 				<span class="text-sm text-muted">{education.dates}</span>
 			</li>
 		</ul>

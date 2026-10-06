@@ -24,7 +24,7 @@ Goal: a fast, dark, terminal-style developer portfolio with a project showcase, 
 - A large block-character ASCII name as the hero, with a glitch/CRT effect
 - A vertical "glass" dot navigation fixed to the right edge (desktop only)
 - Numbered project cards (01–18): title, language badge, one-line hook, paragraph, tech tags, GitHub/Docs links
-- Informal, self-aware copy ("keep going — apparently length is a personality trait")
+- Informal, self-aware copy ("keep going, apparently length is a personality trait")
 - Writing section with **Blog / External** tabs, date · read time · tags
 - Mostly monospace type throughout
 
@@ -254,7 +254,7 @@ draft: false
 - [ ] OG image previews correctly (check with opengraph.xyz or the LinkedIn Post Inspector)
 - [x] Mobile: no horizontal scroll, dot nav hidden, ASCII hero scales down (or switches to a smaller figlet font)
 - [x] `prefers-reduced-motion` turns off the glitch effect
-- [x] Lighthouse ≥ 95, axe has no violations — 2026-10-02, local production build: performance 98 mobile / 100 desktop, accessibility 100, SEO 100, best practices 96 (only the `/_vercel/*` scripts 404 locally). axe runs in `site.e2e.ts` on every page
+- [x] Lighthouse ≥ 95, axe has no violations, 2026-10-02, local production build: performance 98 mobile / 100 desktop, accessibility 100, SEO 100, best practices 96 (only the `/_vercel/*` scripts 404 locally). axe runs in `site.e2e.ts` on every page
 - [x] 404 page works
 - [ ] Analytics receiving events
 

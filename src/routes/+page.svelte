@@ -23,7 +23,7 @@
 	// starts when the previous one finishes.
 	const tagline = [
 		'I build machine learning for fintech and ship it as software.',
-		'APIs, tests and model cards — not just notebooks.',
+		'APIs, tests and model cards, not just notebooks.',
 		"Don't take my word for it. Look below."
 	];
 	const msPerChar = 22;
@@ -59,7 +59,7 @@
 <DotNav {sections} />
 
 <section id="hero" class="flex flex-col items-center pt-20 pb-16 text-center sm:pt-28">
-	<h1 class="sr-only">{site.name} — {site.role}</h1>
+	<h1 class="sr-only">{site.name}, {site.role}</h1>
 	<AsciiName text={site.asciiName} />
 
 	<p class="mt-6 text-xs tracking-[0.3em] text-muted uppercase">
@@ -124,7 +124,7 @@
 		<p class="mb-3 text-[11px] tracking-[0.2em] text-dim uppercase">Honest bit</p>
 		<p class="font-sans text-fg">
 			Everything below is real work with code you can read. Most of it ships with an API, tests, and
-			a written list of its own limitations — a model that hides its weaknesses isn't one I'd trust
+			a written list of its own limitations, a model that hides its weaknesses isn't one I'd trust
 			with a loan decision.
 		</p>
 		<p class="mt-3 font-sans text-muted italic">
@@ -189,7 +189,7 @@
 				></span>
 				<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
 					<h3 class="font-semibold text-fg">
-						{job.role} <span class="font-normal text-muted">— {job.org}</span>
+						{job.role}<span class="font-normal text-muted">, {job.org}</span>
 					</h3>
 					<span class="text-xs text-muted tabular-nums">{job.dates}</span>
 				</div>
@@ -219,7 +219,7 @@
 			></span>
 			<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
 				<h3 class="font-semibold text-fg">
-					{education.degree} <span class="font-normal text-muted">— {education.school}</span>
+					{education.degree}<span class="font-normal text-muted">, {education.school}</span>
 				</h3>
 				<span class="text-xs text-muted tabular-nums">{education.dates}</span>
 			</div>
@@ -247,7 +247,7 @@
 		Looking for a machine learning role building reliable AI features for fintech and startup
 		products.
 	</p>
-	<p class="mt-2 font-sans text-muted">Based in {site.location} — open to hybrid.</p>
+	<p class="mt-2 font-sans text-muted">Based in {site.location}, open to hybrid.</p>
 	<div class="mt-6 flex flex-wrap gap-3 text-sm">
 		<a
 			href="mailto:{site.email}"
