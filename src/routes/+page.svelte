@@ -7,6 +7,8 @@
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 	import Seo from '$lib/components/Seo.svelte';
+	import StatusBadge from '$lib/components/StatusBadge.svelte';
+	import { reveal as revealOnScroll } from '$lib/actions/reveal';
 	import { categories, projects, type Category } from '$lib/data/projects';
 	import { education, experience, site, skills } from '$lib/data/site';
 	import { copy, palette } from '$lib/ui.svelte';
@@ -60,6 +62,7 @@
 
 <section id="hero" class="flex flex-col items-center pt-20 pb-16 text-center sm:pt-28">
 	<h1 class="sr-only">{site.name}, {site.role}</h1>
+	<div class="mb-6"><StatusBadge /></div>
 	<AsciiName text={site.asciiName} />
 
 	<p class="mt-6 text-xs tracking-[0.3em] text-muted uppercase">
@@ -79,9 +82,13 @@
 		{/each}
 	</div>
 
-	<nav aria-label="Primary" class="mt-8 flex flex-wrap justify-center gap-x-2 gap-y-2 text-sm">
-		<a href="/why-hire-me" class="font-semibold underline-offset-4 hover:underline">Why hire me</a>
-		<span class="text-dim" aria-hidden="true">·</span>
+	<nav aria-label="Primary" class="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 text-sm">
+		<a
+			href="/why-hire-me"
+			class="inline-flex items-center gap-1.5 rounded border border-fg px-4 py-2 font-semibold text-fg transition-colors hover:bg-fg hover:text-bg"
+		>
+			Why hire me <span aria-hidden="true">→</span>
+		</a>
 		<a href="#projects" class="font-semibold underline-offset-4 hover:underline">Projects</a>
 		{#if site.resume}
 			<span class="text-dim" aria-hidden="true">·</span>
@@ -117,7 +124,7 @@
 	</ul>
 </section>
 
-<section id="projects" aria-labelledby="projects-heading" class="py-12">
+<section id="projects" aria-labelledby="projects-heading" class="py-12" use:revealOnScroll>
 	<SectionHeading id="projects" index={1} title="Projects" meta={String(projects.length)} />
 
 	<div class="rounded-md border border-dashed border-hairline p-5 text-sm leading-relaxed">
@@ -178,7 +185,7 @@
 	</p>
 </section>
 
-<section id="experience" aria-labelledby="experience-heading" class="py-12">
+<section id="experience" aria-labelledby="experience-heading" class="py-12" use:revealOnScroll>
 	<SectionHeading id="experience" index={2} title="Experience" />
 	<ol class="relative space-y-8 border-l border-hairline pl-6">
 		{#each experience as job (job.org)}
@@ -227,11 +234,18 @@
 	</ol>
 </section>
 
-<section id="toolkit" aria-labelledby="toolkit-heading" class="py-12">
+<section id="toolkit" aria-labelledby="toolkit-heading" class="py-12" use:revealOnScroll>
 	<SectionHeading id="toolkit" index={3} title="Toolkit" />
 	<dl class="grid gap-x-8 gap-y-5 sm:grid-cols-[12rem_1fr]">
-		{#each skills as { group, items } (group)}
-			<dt class="text-xs tracking-wider text-dim uppercase sm:pt-1">{group}</dt>
+		{#each skills as { group, items, note } (group)}
+			<dt class="text-xs tracking-wider text-dim uppercase sm:pt-1">
+				{group}
+				{#if note}
+					<span class="mt-1 block font-sans text-[0.7rem] tracking-normal text-dim normal-case"
+						>{note}</span
+					>
+				{/if}
+			</dt>
 			<dd class="flex flex-wrap gap-1.5">
 				{#each items as item (item)}
 					<span class="rounded border border-hairline px-2 py-0.5 text-xs text-muted">{item}</span>
@@ -241,7 +255,7 @@
 	</dl>
 </section>
 
-<section id="contact" aria-labelledby="contact-heading" class="py-12 pb-20">
+<section id="contact" aria-labelledby="contact-heading" class="py-12 pb-20" use:revealOnScroll>
 	<SectionHeading id="contact" index={4} title="Contact" />
 	<p class="font-sans text-fg">
 		Looking for a machine learning role building reliable AI features for fintech and startup

@@ -52,12 +52,18 @@ export const education = {
 	dates: '2021 – 2025'
 };
 
-export type Skill = { group: string; items: string[] };
+/** `note` is a short line under the group name: what I actually do with these, not a keyword dump. */
+export type Skill = { group: string; items: string[]; note?: string };
 
 export const skills: Skill[] = [
-	{ group: 'Languages & tools', items: ['Python', 'SQL', 'Git', 'GitHub Actions', 'Jupyter'] },
+	{
+		group: 'Languages & tools',
+		note: 'reproducible, CI-backed',
+		items: ['Python', 'SQL', 'Git', 'GitHub Actions', 'Jupyter']
+	},
 	{
 		group: 'Machine learning',
+		note: 'calibrated and cost-aware',
 		items: [
 			'scikit-learn',
 			'LightGBM',
@@ -71,10 +77,12 @@ export const skills: Skill[] = [
 	},
 	{
 		group: 'Deep learning & NLP',
+		note: 'only when it beats the baseline',
 		items: ['PyTorch', 'GRU / LSTM', 'TF-IDF', 'Embeddings', 'Text classification']
 	},
 	{
 		group: 'Time series & statistics',
+		note: 'econometric baselines first',
 		items: [
 			'ARIMA / SARIMA',
 			'GARCH',
@@ -86,6 +94,7 @@ export const skills: Skill[] = [
 	},
 	{
 		group: 'Deployment & data',
+		note: 'shipped as tested APIs',
 		items: [
 			'Flask REST APIs',
 			'pytest',
