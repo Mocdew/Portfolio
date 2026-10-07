@@ -8,7 +8,6 @@
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 	import Seo from '$lib/components/Seo.svelte';
 	import StatusBadge from '$lib/components/StatusBadge.svelte';
-	import { reveal as revealOnScroll } from '$lib/actions/reveal';
 	import { categories, projects, type Category } from '$lib/data/projects';
 	import { education, experience, site, skills } from '$lib/data/site';
 	import { copy, palette } from '$lib/ui.svelte';
@@ -124,7 +123,7 @@
 	</ul>
 </section>
 
-<section id="projects" aria-labelledby="projects-heading" class="py-12" use:revealOnScroll>
+<section id="projects" aria-labelledby="projects-heading" class="py-12">
 	<SectionHeading id="projects" index={1} title="Projects" meta={String(projects.length)} />
 
 	<div class="rounded-md border border-dashed border-hairline p-5 text-sm leading-relaxed">
@@ -185,7 +184,7 @@
 	</p>
 </section>
 
-<section id="experience" aria-labelledby="experience-heading" class="py-12" use:revealOnScroll>
+<section id="experience" aria-labelledby="experience-heading" class="py-12">
 	<SectionHeading id="experience" index={2} title="Experience" />
 	<ol class="relative space-y-8 border-l border-hairline pl-6">
 		{#each experience as job (job.org)}
@@ -234,7 +233,7 @@
 	</ol>
 </section>
 
-<section id="toolkit" aria-labelledby="toolkit-heading" class="py-12" use:revealOnScroll>
+<section id="toolkit" aria-labelledby="toolkit-heading" class="py-12">
 	<SectionHeading id="toolkit" index={3} title="Toolkit" />
 	<dl class="grid gap-x-8 gap-y-5 sm:grid-cols-[12rem_1fr]">
 		{#each skills as { group, items, note } (group)}
@@ -255,7 +254,7 @@
 	</dl>
 </section>
 
-<section id="contact" aria-labelledby="contact-heading" class="py-12 pb-20" use:revealOnScroll>
+<section id="contact" aria-labelledby="contact-heading" class="py-12 pb-20">
 	<SectionHeading id="contact" index={4} title="Contact" />
 	<p class="font-sans text-fg">
 		Looking for a machine learning role building reliable AI features for fintech and startup
