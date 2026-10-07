@@ -187,19 +187,3 @@ body::after {
 	background: var(--glass);
 	backdrop-filter: blur(10px);
 }
-
-/* Scroll-reveal for content sections (see $lib/actions/reveal). The hidden state is added by JS
-   only, and never under reduced motion, so content is always visible when the effect can't run. */
-.reveal-init {
-	opacity: 0;
-	transform: translateY(12px);
-	transition:
-		opacity 0.55s ease,
-		transform 0.55s ease;
-	will-change: opacity, transform;
-}
-
-.reveal-in {
-	opacity: 1;
-	transform: none;
-}
