@@ -69,7 +69,9 @@
 
 	<footer class="mt-16 border-t border-hairline pt-8">
 		{#if others.length}
-			<p class="text-[11px] tracking-[0.2em] text-dim uppercase">Next case study</p>
+			<p class="text-[11px] tracking-[0.2em] text-dim uppercase">
+				{others.length > 1 ? 'More case studies' : 'Next case study'}
+			</p>
 			<ul class="mt-3 space-y-2">
 				{#each others as other (other.slug)}
 					<li>

@@ -1,10 +1,11 @@
 <script lang="ts">
+	import ApplicantWalkthrough from '$lib/components/case-study/ApplicantWalkthrough.svelte';
 	import BarChart from '$lib/components/case-study/BarChart.svelte';
 	import CaseStudy from '$lib/components/case-study/CaseStudy.svelte';
 	import Flow from '$lib/components/case-study/Flow.svelte';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 
-	// Every number on this page comes from the Can-I-Borrow README (held-out test cohort of
+	// The validation results come from the Can-I-Borrow README (held-out test cohort of
 	// 51,070 loans; 163,421 fit / 40,856 calibration / 51,070 test, stratified, seed 42).
 	const metrics = [
 		{
@@ -32,6 +33,11 @@
 	slug="can-i-borrow"
 	summary="A loan default risk engine trained on 255,000 consumer loans. It gives an underwriter an honest probability that a borrower will default, a recommendation priced in money, and the top reasons behind every decision, with the attributes the law forbids kept out of the model."
 >
+	<section id="try-it" aria-labelledby="try-it-heading">
+		<SectionHeading id="try-it" title="Try a sample applicant" />
+		<ApplicantWalkthrough />
+	</section>
+
 	<section id="problem" aria-labelledby="problem-heading">
 		<SectionHeading id="problem" index={1} title="The problem" />
 		<p>

@@ -36,7 +36,8 @@ const gh = (repo: string) => `https://github.com/Mocdew/${repo}`;
 
 // Case studies are static routes under src/routes/projects/, so the path is typed as one of them.
 export const caseStudyHref = (p: Pick<Project, 'slug'>) =>
-	`/projects/${p.slug}` as '/projects/recoup' | '/projects/can-i-borrow';
+	`/projects/${p.slug}` as
+		'/projects/recoup' | '/projects/can-i-borrow' | '/projects/dsn-hackathon';
 
 export const projects: Project[] = [
 	{
@@ -61,7 +62,7 @@ export const projects: Project[] = [
 		description:
 			'Built during my ML internship at Notzero Technologies. When a subscription payment fails, Recoup plans the whole retry schedule when to retry, how many times, and when to stop and ask for a new card instead of replaying the fixed 1/3/7-day ladder. A mixture-cure hazard model separates "customer is gone" from "not funded yet" and is pooled across merchants, so small ones still benefit; an exact planner values every candidate schedule in closed form, and Thompson-sampled exploration logs the propensities that cross-fitted, doubly-robust evaluation needs. A deployment gate keeps the old ladder in charge until that evidence clears: in a 45-day simulated rollout it held for six weeks, then switched. Ships with an ops CLI and a FastAPI + React operator console. All results are from simulation.',
 		metrics: [
-			'+31% recovered per failed invoice',
+			'+31% recovered per failed invoice (simulation)',
 			'$15.93 vs $12.12',
 			'+20–35% across 6 perturbed worlds',
 			'+19% for small merchants'
@@ -108,6 +109,7 @@ export const projects: Project[] = [
 		tags: ['Ridge', 'LightGBM', 'XGBoost', 'CatBoost', 'pytest', 'CI'],
 		links: { github: gh('DSN') },
 		category: 'Forecasting',
+		caseStudy: true,
 		image: {
 			src: '/projects/dsn-hackathon.webp',
 			srcLight: '/projects/dsn-hackathon-light.webp',

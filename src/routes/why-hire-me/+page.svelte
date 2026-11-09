@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import Icon from '$lib/components/Icon.svelte';
 	import Seo from '$lib/components/Seo.svelte';
 	import { education, experience, site } from '$lib/data/site';
@@ -7,24 +8,28 @@
 		{
 			title: 'I ship models, not notebooks.',
 			body: 'Can I borrow.ai trains, calibrates and versions its models, writes its own model card, and serves predictions through a Flask API backed by 93 tests. CrediPulse and Deal Desk ship the same way: code someone else can run, check and maintain.',
-			proof: '#can-i-borrow'
+			proof: '/projects/can-i-borrow',
+			linkText: 'Read the Can I borrow.ai case study'
 		},
 		{
 			title: 'I measure what the business actually pays for.',
 			body: 'Decision thresholds are tuned to the cost of a missed default, not to accuracy. CrediPulse sets its cutoffs in money, per loan size. Recoup, built during my internship at Notzero, is judged by dollars recovered per failed invoice, 31% more than the standard retry schedule in simulation.',
-			proof: '#recoup'
+			proof: '/projects/recoup',
+			linkText: 'Read the Recoup case study'
 		},
 		{
 			title: 'I report results honestly.',
 			body: 'Confidence intervals, paired significance tests, walk-forward validation. In the DSN hackathon, error analysis showed a simple store-ratio model beat tuned LightGBM, XGBoost and CatBoost, so that is the model I shipped.',
-			proof: '#dsn-hackathon'
+			proof: '/projects/dsn-hackathon',
+			linkText: 'Read the DSN Hackathon case study'
 		},
 		{
 			title: 'I take fairness and regulation seriously.',
 			body: 'In both credit projects, attributes that are prohibited bases under ECOA / Regulation B are kept out of the model, and in Can I borrow.ai a unit test enforces it, and every training run screens for disparate impact and records the result in the model card.',
-			proof: '#credipulse'
+			proof: '/#credipulse',
+			linkText: 'See the CrediPulse project'
 		}
-	];
+	] as const;
 </script>
 
 <Seo
@@ -49,8 +54,11 @@
 				<div>
 					<h2 class="font-semibold text-fg">{reason.title}</h2>
 					<p class="mt-2 max-w-prose font-sans leading-relaxed text-muted">{reason.body}</p>
-					<a href="/{reason.proof}" class="mt-2 inline-block text-sm text-accent hover:underline">
-						See the project →
+					<a
+						href={resolve(reason.proof)}
+						class="mt-2 inline-block text-sm text-accent hover:underline"
+					>
+						{reason.linkText} <span aria-hidden="true">→</span>
 					</a>
 				</div>
 			</li>
@@ -80,13 +88,11 @@
 		>
 			<Icon name="mail" size={15} /> Get in touch
 		</a>
-		{#if site.resume}
-			<a
-				href={site.resume}
-				class="inline-flex items-center gap-2 rounded border border-hairline px-4 py-2 text-muted hover:text-fg"
-			>
-				<Icon name="file" size={15} /> Résumé (PDF)
-			</a>
-		{/if}
+		<a
+			href="/cv"
+			class="inline-flex items-center gap-2 rounded border border-hairline px-4 py-2 text-muted hover:text-fg"
+		>
+			<Icon name="file" size={15} /> View CV
+		</a>
 	</div>
 </article>

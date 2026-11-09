@@ -1,18 +1,19 @@
 # Olumide Erinfolami: Portfolio
 
-Personal portfolio: machine learning projects for fintech, a "why hire me" page and a résumé download.
+Personal portfolio: machine learning projects for fintech, a "why hire me" page and a web CV with a PDF download.
 
 Built with SvelteKit 2 (Svelte 5), TypeScript and Tailwind CSS v4. Every page is prerendered to static HTML with `@sveltejs/adapter-static` and hosted on Vercel.
 
 ## Editing content
 
-| What | Where |
-| --- | --- |
-| Project cards | `src/lib/data/projects.ts` |
-| Name, links, email, skills, experience | `src/lib/data/site.ts` |
-| Home page layout and copy | `src/routes/+page.svelte` |
-| Why hire me page | `src/routes/why-hire-me/+page.svelte` |
-| Résumé PDF | `static/Olumide_Erinfolami_Resume.pdf` |
+| What                                   | Where                                  |
+| -------------------------------------- | -------------------------------------- |
+| Project cards                          | `src/lib/data/projects.ts`             |
+| Name, links, email, skills, experience | `src/lib/data/site.ts`                 |
+| Home page layout and copy              | `src/routes/+page.svelte`              |
+| Why hire me page                       | `src/routes/why-hire-me/+page.svelte`  |
+| Web CV                                 | `src/routes/cv/+page.svelte`           |
+| Résumé PDF                             | `static/Olumide_Erinfolami_Resume.pdf` |
 
 The résumé in `static/` is public. It is a copy of the master résumé with the phone number removed, so check any replacement for private details before committing it.
 

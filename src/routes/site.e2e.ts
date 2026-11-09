@@ -17,28 +17,41 @@ test('home page shows the name, every project and no console errors', async ({ p
 	expect(errors).toEqual([]);
 });
 
-test('résumé link serves the PDF', async ({ page, request }) => {
+test('CV page shows experience and selected work and serves the résumé PDF', async ({
+	page,
+	request
+}) => {
 	await page.goto('/');
-	const href = await page.getByRole('link', { name: 'Résumé' }).getAttribute('href');
+	await page.getByRole('link', { name: 'CV', exact: true }).click();
+	await expect(page).toHaveURL(/\/cv$/);
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Olumide Erinfolami');
+	await expect(page.getByRole('heading', { name: 'Experience' })).toBeVisible();
+	await expect(page.getByRole('link', { name: 'DSN Hackathon 2026 case study' })).toHaveAttribute(
+		'href',
+		'/projects/dsn-hackathon'
+	);
+	const href = await page.getByRole('link', { name: 'Download PDF' }).getAttribute('href');
 	const res = await request.get(href!);
 	expect(res.status()).toBe(200);
 	expect(res.headers()['content-type']).toContain('application/pdf');
 });
 
-test('why-hire-me page links back to projects', async ({ page }) => {
+test('why-hire-me page links directly to case studies', async ({ page }) => {
 	await page.goto('/why-hire-me');
 	await expect(page.getByRole('heading', { level: 1, name: 'Why hire me' })).toBeVisible();
-	await page.getByRole('link', { name: 'See the project →' }).first().click();
-	await expect(page).toHaveURL(/\/#can-i-borrow$/);
+	await page.getByRole('link', { name: 'Read the Can I borrow.ai case study' }).click();
+	await expect(page).toHaveURL(/\/projects\/can-i-borrow$/);
 });
 
-test('page does not scroll sideways on a phone', async ({ page }) => {
+test('home and CV pages do not scroll sideways on a phone', async ({ page }) => {
 	await page.setViewportSize({ width: 375, height: 812 });
-	await page.goto('/');
-	const overflow = await page.evaluate(
-		() => document.documentElement.scrollWidth - document.documentElement.clientWidth
-	);
-	expect(overflow).toBeLessThanOrEqual(0);
+	for (const path of ['/', '/cv']) {
+		await page.goto(path);
+		const overflow = await page.evaluate(
+			() => document.documentElement.scrollWidth - document.documentElement.clientWidth
+		);
+		expect(overflow, path).toBeLessThanOrEqual(0);
+	}
 });
 
 test('unknown routes show the 404 page', async ({ page }) => {
@@ -95,7 +108,12 @@ test('social preview image is declared and served', async ({ page, request }) =>
 	expect(res.headers()['content-type']).toContain('image/png');
 });
 
-const pages = ['/', '/why-hire-me', ...projects.filter((p) => p.caseStudy).map(caseStudyHref)];
+const pages = [
+	'/',
+	'/cv',
+	'/why-hire-me',
+	...projects.filter((p) => p.caseStudy).map(caseStudyHref)
+];
 
 for (const theme of ['light', 'dark'] as const) {
 	for (const path of pages) {
@@ -124,13 +142,39 @@ test('command palette opens with the keyboard, searches and navigates', async ({
 	await expect(page).toHaveURL(/\/why-hire-me$/);
 });
 
-test('case study cards link to their write-ups', async ({ page }) => {
+test('the Start here section and DSN project card link to their write-ups', async ({ page }) => {
+	await page.goto('/');
+	const startHere = page.getByRole('region', { name: 'Start here' });
+	await expect(startHere.getByRole('link', { name: /Can I borrow/ })).toHaveAttribute(
+		'href',
+		'/projects/can-i-borrow'
+	);
+	await expect(startHere.getByRole('link', { name: /Recoup/ })).toContainText(/simulation/i);
+	await startHere.getByRole('link', { name: /Recoup/ }).click();
+	await expect(page.getByRole('heading', { level: 1, name: 'Recoup' })).toBeVisible();
 	await page.goto('/');
 	await page
-		.locator('#recoup')
+		.locator('#dsn-hackathon')
 		.getByRole('link', { name: /case study/i })
 		.click();
-	await expect(page.getByRole('heading', { level: 1, name: 'Recoup' })).toBeVisible();
+	await expect(page.getByRole('heading', { level: 1, name: 'DSN Hackathon 2026' })).toBeVisible();
+});
+
+test('the sample applicant what-if can cross the review threshold with the keyboard', async ({
+	page
+}) => {
+	await page.goto('/projects/can-i-borrow');
+	const walkthrough = page.locator('#try-it');
+	const result = walkthrough.locator('[aria-live]');
+	await expect(result).toContainText('Below review threshold');
+	const amount = walkthrough.getByRole('slider', { name: 'Loan amount' });
+	await expect(amount).toBeEnabled();
+	await amount.press('ArrowRight');
+	await expect(amount).toHaveAttribute('aria-valuetext', '$30,000');
+	await expect(result).toContainText('Flag for review');
+	await walkthrough.locator('label').filter({ hasText: 'Steady income' }).click();
+	await expect(amount).toHaveAttribute('aria-valuetext', '$20,000');
+	await expect(result).toContainText('Below review threshold');
 });
 
 test('light is the default, whatever the system prefers', async ({ page }) => {
