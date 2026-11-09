@@ -19,7 +19,7 @@
 	--font-mono: 'Geist Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-/* Dark theme: the original terminal look, with an amber accent. */
+/* Dark theme: the original terminal look, with a grey accent. */
 :root[data-theme='dark'] {
 	--color-bg: #050404;
 	--color-panel: #0b0a0a;
@@ -27,7 +27,7 @@
 	--color-fg: #e4e0e0;
 	--color-muted: #9a9494;
 	--color-dim: #7e7878; /* lightest grey that keeps 4.5:1 contrast on bg and panel */
-	--color-accent: #f2b84b;
+	--color-accent: #b8b8b8;
 	--scanline: rgb(255 255 255 / 0.018);
 	--glass: rgb(12 11 11 / 0.6);
 	color-scheme: dark;
