@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { flushSync } from 'svelte';
 	import { beforeNavigate } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import AsciiName from '$lib/components/AsciiName.svelte';
 	import DotNav from '$lib/components/DotNav.svelte';
 	import Icon from '$lib/components/Icon.svelte';
@@ -8,7 +9,7 @@
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 	import Seo from '$lib/components/Seo.svelte';
 	import StatusBadge from '$lib/components/StatusBadge.svelte';
-	import { categories, projects, type Category } from '$lib/data/projects';
+	import { caseStudyHref, categories, projects, type Category } from '$lib/data/projects';
 	import { education, experience, site, skills } from '$lib/data/site';
 	import { copy, palette } from '$lib/ui.svelte';
 
@@ -18,6 +19,21 @@
 		{ id: 'experience', label: 'Experience' },
 		{ id: 'toolkit', label: 'Toolkit' },
 		{ id: 'contact', label: 'Contact' }
+	];
+
+	const selectedWork = [
+		{
+			slug: 'can-i-borrow',
+			title: 'Can I borrow.ai',
+			category: 'Credit risk',
+			result: 'Flagged 80% of defaults in a test set of 51,070 loans.'
+		},
+		{
+			slug: 'recoup',
+			title: 'Recoup',
+			category: 'Payments',
+			result: 'Recovered 31% more per failed invoice than fixed retries in simulation.'
+		}
 	];
 
 	// The hero lines type themselves out once (CSS only; see .type in layout.css). Each line
@@ -81,7 +97,10 @@
 		{/each}
 	</div>
 
-	<nav aria-label="Primary" class="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 text-sm">
+	<nav
+		aria-label="Primary"
+		class="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 text-sm"
+	>
 		<a
 			href="/why-hire-me"
 			class="inline-flex items-center gap-1.5 rounded border border-fg px-4 py-2 font-semibold text-fg transition-colors hover:bg-fg hover:text-bg"
@@ -89,10 +108,8 @@
 			Why hire me <span aria-hidden="true">→</span>
 		</a>
 		<a href="#projects" class="font-semibold underline-offset-4 hover:underline">Projects</a>
-		{#if site.resume}
-			<span class="text-dim" aria-hidden="true">·</span>
-			<a href={site.resume} class="font-semibold underline-offset-4 hover:underline">Résumé</a>
-		{/if}
+		<span class="text-dim" aria-hidden="true">·</span>
+		<a href="/cv" class="font-semibold underline-offset-4 hover:underline">CV</a>
 		<span class="text-dim" aria-hidden="true">·</span>
 		<button
 			type="button"
@@ -120,6 +137,33 @@
 				<Icon name="mail" size={18} />
 			</a>
 		</li>
+	</ul>
+</section>
+
+<section aria-labelledby="start-here-heading" class="border-t border-hairline pt-6">
+	<h2 id="start-here-heading" class="mb-3 text-xs tracking-[0.2em] text-dim uppercase">
+		Start here
+	</h2>
+	<ul class="grid gap-3 sm:grid-cols-2">
+		{#each selectedWork as project (project.slug)}
+			<li>
+				<a
+					href={resolve(caseStudyHref(project))}
+					class="group block h-full rounded-md border border-hairline bg-panel p-4 transition-colors hover:border-accent"
+				>
+					<span class="block text-[11px] tracking-wider text-dim uppercase">{project.category}</span
+					>
+					<span
+						class="mt-1 flex items-baseline justify-between gap-2 font-semibold text-fg group-hover:text-accent"
+					>
+						{project.title}<span aria-hidden="true">→</span>
+					</span>
+					<span class="mt-1 block font-sans text-sm leading-relaxed text-muted"
+						>{project.result}</span
+					>
+				</a>
+			</li>
+		{/each}
 	</ul>
 </section>
 

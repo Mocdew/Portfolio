@@ -27,6 +27,13 @@
 			label: 'Why hire me',
 			run: () => goto(resolve('/why-hire-me'))
 		},
+		{
+			id: 'go-cv',
+			group: 'Go to',
+			label: 'CV',
+			hint: 'Résumé, experience and selected projects',
+			run: () => goto(resolve('/cv'))
+		},
 		...projects
 			.filter((p) => p.caseStudy)
 			.map((p) => ({
