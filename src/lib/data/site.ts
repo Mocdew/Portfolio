@@ -10,12 +10,12 @@ export const site = {
 	description:
 		'Machine learning engineer building credit-risk, forecasting and payments models for fintech, shipped as APIs with tests, model cards and honest limitations.',
 	email: 'anthonyerinfolami@gmail.com',
+	phones: ['+234 806 954 1757', '+234 807 561 0080'],
 	socials: {
 		github: 'https://github.com/Mocdew',
 		linkedin: 'https://www.linkedin.com/in/olumide-erinfolami-532b32276/'
 	},
-	// Public copy with the phone number removed. Keep this file in /static in sync with the
-	// master résumé, and re-check it for private details before replacing it.
+	// Keep the public PDF in /static and the web CV in sync.
 	resume: '/Olumide_Erinfolami_Resume.pdf' as string | null
 };
 

@@ -3,6 +3,7 @@
 		| 'github'
 		| 'linkedin'
 		| 'mail'
+		| 'phone'
 		| 'arrow-up-right'
 		| 'file'
 		| 'arrow-down'
@@ -55,6 +56,10 @@
 		{#if name === 'mail'}
 			<rect x="2" y="4" width="20" height="16" rx="2" />
 			<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+		{:else if name === 'phone'}
+			<path
+				d="M13.8 16.6a1 1 0 0 0 1.2-.3l.4-.5A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.5.4a1 1 0 0 0-.3 1.2 14 14 0 0 0 6.4 6.4Z"
+			/>
 		{:else if name === 'arrow-up-right'}
 			<path d="M7 17 17 7M7 7h10v10" />
 		{:else if name === 'copy'}
