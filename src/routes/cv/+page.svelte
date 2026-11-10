@@ -153,6 +153,11 @@
 				<h2 id="cv-contact">Contact</h2>
 				<ul class="cv-contact">
 					<li><a href="mailto:{site.email}"><Icon name="mail" size={15} /> {site.email}</a></li>
+					{#each site.phones as phone (phone)}
+						<li>
+							<a href="tel:{phone.replaceAll(' ', '')}"><Icon name="phone" size={15} /> {phone}</a>
+						</li>
+					{/each}
 					<li><a href={site.socials.linkedin}><Icon name="linkedin" size={15} /> LinkedIn</a></li>
 					<li>
 						<a href={site.socials.github}><Icon name="github" size={15} /> GitHub / Mocdew</a>
