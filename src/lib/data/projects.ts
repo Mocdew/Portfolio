@@ -35,6 +35,8 @@ export type Category = (typeof categories)[number];
 
 const gh = (repo: string) => `https://github.com/Mocdew/${repo}`;
 
+export const lendTrialUrl = 'https://mocdew.github.io/LendTrial/';
+
 // Case studies are static routes under src/routes/projects/, so the path is typed as one of them.
 export const caseStudyHref = (p: Pick<Project, 'slug'>) =>
 	`/projects/${p.slug}` as
@@ -68,7 +70,7 @@ export const projects: Project[] = [
 			'Compare two repeat-loan caps on the same applications, then simulate a randomized rollout. The console tracks offers, funding and first-payment misses and can pause candidate offers at a preset threshold. Try the synthetic demo or load reference scores exported from Can I borrow.ai.',
 		metrics: ['policy replay', 'rollout simulation', 'CSV audit export'],
 		tags: ['Credit policy', 'Experiment design', 'SvelteKit', 'Python'],
-		links: {},
+		links: { github: gh('LendTrial'), demo: lendTrialUrl },
 		category: 'Credit risk',
 		featured: true,
 		caseStudy: true
