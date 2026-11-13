@@ -19,20 +19,16 @@ test('the project card and case study link to the standalone app and repository'
 	page
 }) => {
 	await page.goto('/');
-	const launch = page.getByRole('link', { name: 'Try the LendTrial demo' });
-	await expect(launch).toBeInViewport();
-	await launch.click();
-	await expect(page).toHaveURL(new RegExp(`${path}#try-it$`));
-	const demo = page.locator('#try-it').getByTitle('Interactive LendTrial demo');
-	await expect(demo).toBeInViewport();
-	await expect(demo).toHaveAttribute('src', demoUrl);
-
-	await page.goto('/');
+	await expect(page.getByRole('link', { name: 'Try the LendTrial demo', exact: true })).toHaveCount(
+		0
+	);
 	const card = page.locator('#lendtrial');
 	await expect(card.getByRole('link', { name: /live demo/i })).toHaveAttribute('href', demoUrl);
 	await expect(card.getByRole('link', { name: /github/i })).toHaveAttribute('href', githubUrl);
 	await card.getByRole('link', { name: /case study/i }).click();
 	await expect(page).toHaveURL(new RegExp(`${path}$`));
+	const demo = page.locator('#try-it').getByTitle('Interactive LendTrial demo');
+	await expect(demo).toHaveAttribute('src', demoUrl);
 	await expect(page.getByRole('link', { name: /live demo/i })).toHaveAttribute('href', demoUrl);
 	await expect(page.getByRole('link', { name: /github/i })).toHaveAttribute('href', githubUrl);
 	await page.goto('/projects/can-i-borrow');
