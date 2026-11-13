@@ -19,9 +19,10 @@ The résumé in `static/` is public. Keep its contact details in sync with the w
 
 ## LimitRehearsal
 
-The case study at `/projects/limit-rehearsal` runs the policy replay and rollout in the browser.
-Use the [Can I borrow.ai score exporter](scripts/limit-rehearsal/README.md) to load reference scores
-from a pinned model into the same console.
+The case study at `/projects/limit-rehearsal` explains the policy replay and simulated rollout.
+Run [LimitRehearsal](https://mocdew.github.io/LimitRehearsal/) in your browser. The
+[standalone repository](https://github.com/Mocdew/LimitRehearsal) contains the simulator and the
+Can I borrow.ai score exporter.
 
 ## Development
 

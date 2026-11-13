@@ -1,135 +1,12 @@
 <script lang="ts">
-	import LimitRehearsal from '$lib/components/LimitRehearsal.svelte';
 	import CaseStudy from '$lib/components/case-study/CaseStudy.svelte';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import {
-		MAX_SCORE_FILE_BYTES,
-		readScoreExport,
-		type ScoreExport
-	} from '$lib/limit-rehearsal/import';
-
-	let scoreExport = $state<ScoreExport | null>(null);
-	let importMessage = $state('');
-	let importing = $state(false);
-	let importFailed = $state(false);
-	let revision = $state(0);
-
-	function loadScores(imported: ScoreExport, source: string) {
-		scoreExport = imported;
-		revision += 1;
-		const count = imported.applications.length;
-		importMessage = `Loaded ${count.toLocaleString('en-NG')} scored ${count === 1 ? 'application' : 'applications'}${source}.`;
-	}
-
-	async function importScores(event: Event) {
-		const input = event.currentTarget as HTMLInputElement;
-		const file = input.files?.[0];
-		if (!file) return;
-		importMessage = '';
-		importFailed = false;
-		importing = true;
-		try {
-			if (file.size > MAX_SCORE_FILE_BYTES) throw new Error('Choose a JSON file up to 2 MB.');
-			loadScores(readScoreExport(await file.text()), '');
-		} catch (error) {
-			importFailed = true;
-			importMessage = error instanceof Error ? error.message : 'Could not read this score export.';
-		} finally {
-			input.value = '';
-			importing = false;
-		}
-	}
-
-	async function loadSample() {
-		importMessage = '';
-		importFailed = false;
-		importing = true;
-		try {
-			const response = await fetch('/projects/limit-rehearsal-scores.json');
-			if (!response.ok) throw new Error('The scored sample is temporarily unavailable.');
-			loadScores(readScoreExport(await response.text()), ' from the sample');
-		} catch (error) {
-			importFailed = true;
-			importMessage = error instanceof Error ? error.message : 'Could not load the scored sample.';
-		} finally {
-			importing = false;
-		}
-	}
-
-	function resetScores() {
-		scoreExport = null;
-		importFailed = false;
-		importMessage = 'Restored the synthetic demo cohort.';
-		revision += 1;
-	}
 </script>
 
 <CaseStudy
 	slug="limit-rehearsal"
 	summary="A loan policy testing tool for a naira installment product. Replay a proposed cap on the same borrowers, then run a simulated pilot to see how first-payment misses could change."
 >
-	<section id="try-it" aria-labelledby="try-it-heading">
-		<SectionHeading id="try-it" title="Run the demo" />
-		<div class="mt-5">
-			{#key revision}
-				<LimitRehearsal
-					applications={scoreExport?.applications}
-					model={scoreExport?.model}
-					scoreSource={scoreExport
-						? `Imported · ${scoreExport.model.type} / ${scoreExport.model.version}`
-						: undefined}
-				/>
-			{/key}
-		</div>
-		<details class="mt-4 rounded-md border border-hairline bg-panel px-4 py-3">
-			<summary class="cursor-pointer text-sm font-medium text-fg"
-				>Load Can I borrow.ai scores</summary
-			>
-			<p class="mt-2 text-sm">
-				Try a sample of synthetic applications scored by a pinned LightGBM artifact, or create a
-				file with the <a
-					href="https://github.com/Mocdew/Portfolio/tree/main/scripts/limit-rehearsal"
-					class="text-accent underline underline-offset-4">local Python exporter</a
-				>. The browser reads imported files on your device.
-			</p>
-			<div class="mt-3 flex flex-wrap items-end gap-3">
-				<button
-					type="button"
-					onclick={loadSample}
-					disabled={importing}
-					class="rounded border border-hairline px-2 py-1.5 text-xs text-fg hover:border-muted"
-					>Load scored sample</button
-				>
-				<label class="grid max-w-full min-w-0 gap-1.5 text-sm text-fg">
-					Score export (JSON)
-					<input
-						type="file"
-						accept=".json,application/json"
-						onchange={importScores}
-						disabled={importing}
-						class="max-w-full rounded border border-hairline px-2 py-1.5 font-sans text-xs file:mr-2 file:text-fg"
-					/>
-				</label>
-				{#if scoreExport}
-					<button
-						type="button"
-						onclick={resetScores}
-						disabled={importing}
-						class="rounded border border-hairline px-2 py-1.5 text-xs text-fg hover:border-muted"
-						>Restore demo cohort</button
-					>
-				{/if}
-			</div>
-			<div aria-live="polite" aria-atomic="true" class="font-sans text-sm">
-				{#if importMessage}
-					<span class="mt-2 block text-muted"
-						>{importFailed ? 'Import failed. ' : ''}{importMessage}</span
-					>
-				{/if}
-			</div>
-		</details>
-	</section>
-
 	<section id="decision" aria-labelledby="decision-heading">
 		<SectionHeading id="decision" title="The decision" />
 		<p>
@@ -169,10 +46,14 @@
 	<section id="scores" aria-labelledby="scores-heading">
 		<SectionHeading id="scores" title="Where the scores come from" />
 		<p>
-			The default demo uses synthetic scores and repayment events. The Python exporter can use a
-			pinned version of <a
-				href="/projects/can-i-borrow"
-				class="text-accent underline underline-offset-4">Can I borrow.ai</a
+			The default demo uses synthetic scores and repayment events. The
+			<a
+				href="https://github.com/Mocdew/LimitRehearsal/tree/main/scripts/limit-rehearsal"
+				class="text-accent underline underline-offset-4">Python exporter</a
+			>
+			can use a pinned version of
+			<a href="/projects/can-i-borrow" class="text-accent underline underline-offset-4"
+				>Can I borrow.ai</a
 			>
 			for reference scores. Both policy arms use the same score for each application, and payments remain
 			simulated with imported scores. The original model was trained on undated records, so the demo does
