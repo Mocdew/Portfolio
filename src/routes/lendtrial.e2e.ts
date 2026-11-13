@@ -8,7 +8,9 @@ test('old case study links retain their query and demo anchor', async ({ page })
 	await page.goto('/projects/limit-rehearsal?source=portfolio#try-it');
 	await expect(page).toHaveURL(new RegExp(`${path}\\?source=portfolio#try-it$`));
 	await expect(page.getByRole('heading', { name: 'LendTrial', exact: true })).toBeVisible();
-	await expect(page.locator('#try-it').getByRole('link')).toHaveAttribute('href', demoUrl);
+	await expect(
+		page.locator('#try-it').getByRole('link', { name: 'Open LendTrial' })
+	).toHaveAttribute('href', demoUrl);
 	await page.goto('/#limit-rehearsal');
 	await expect(page.locator('#lendtrial')).toBeInViewport();
 });
