@@ -17,6 +17,12 @@ Built with SvelteKit 2 (Svelte 5), TypeScript and Tailwind CSS v4. Every page is
 
 The résumé in `static/` is public. Keep its contact details in sync with the web CV when replacing it.
 
+## LimitRehearsal
+
+The case study at `/projects/limit-rehearsal` runs the policy replay and rollout in the browser.
+Use the [Can I borrow.ai score exporter](scripts/limit-rehearsal/README.md) to load reference scores
+from a pinned model into the same console.
+
 ## Development
 
 Requires Node.js 22+ and pnpm.

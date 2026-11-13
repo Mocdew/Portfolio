@@ -37,7 +37,10 @@ const gh = (repo: string) => `https://github.com/Mocdew/${repo}`;
 // Case studies are static routes under src/routes/projects/, so the path is typed as one of them.
 export const caseStudyHref = (p: Pick<Project, 'slug'>) =>
 	`/projects/${p.slug}` as
-		'/projects/recoup' | '/projects/can-i-borrow' | '/projects/dsn-hackathon';
+		| '/projects/recoup'
+		| '/projects/can-i-borrow'
+		| '/projects/dsn-hackathon'
+		| '/projects/limit-rehearsal';
 
 export const projects: Project[] = [
 	{
@@ -50,6 +53,20 @@ export const projects: Project[] = [
 		metrics: ['ROC-AUC 0.76', 'ECE 0.004', 'catches 80% of defaults', '93 tests'],
 		tags: ['LightGBM', 'scikit-learn', 'SHAP', 'Flask', 'pytest'],
 		links: { github: gh('Can-I-Borrow') },
+		category: 'Credit risk',
+		featured: true,
+		caseStudy: true
+	},
+	{
+		slug: 'limit-rehearsal',
+		title: 'LimitRehearsal',
+		language: 'TypeScript',
+		hook: 'Test a higher loan limit before rolling it out.',
+		description:
+			'Compare two repeat-loan caps on the same applications, then simulate a randomized rollout. The console tracks offers, funding and first-payment misses and can pause candidate offers at a preset threshold. Try the synthetic demo or load reference scores exported from Can I borrow.ai.',
+		metrics: ['policy replay', 'rollout simulation', 'CSV audit export'],
+		tags: ['Credit policy', 'Experiment design', 'SvelteKit', 'Python'],
+		links: {},
 		category: 'Credit risk',
 		featured: true,
 		caseStudy: true
