@@ -1,14 +1,22 @@
 import { readFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
 
-const path = '/projects/limit-rehearsal';
+const path = '/projects/lendtrial';
+
+test('old case study links retain their query and demo anchor', async ({ page }) => {
+	await page.goto('/projects/limit-rehearsal?source=portfolio#try-it');
+	await expect(page).toHaveURL(new RegExp(`${path}\\?source=portfolio#try-it$`));
+	await expect(page.getByRole('heading', { name: 'LendTrial', exact: true })).toBeVisible();
+	await page.goto('/#limit-rehearsal');
+	await expect(page.locator('#lendtrial')).toBeInViewport();
+});
 
 test('a portfolio visitor can replay a cap, export the audit and inspect the rollout', async ({
 	page
 }) => {
 	await page.goto('/');
 	await page
-		.locator('#limit-rehearsal')
+		.locator('#lendtrial')
 		.getByRole('link', { name: /case study/i })
 		.click();
 	await expect(page).toHaveURL(new RegExp(`${path}$`));
@@ -21,6 +29,7 @@ test('a portfolio visitor can replay a cap, export the audit and inspect the rol
 	const downloaded = page.waitForEvent('download');
 	await page.getByRole('button', { name: 'Download CSV' }).click();
 	const download = await downloaded;
+	expect(download.suggestedFilename()).toBe('lendtrial-100000.csv');
 	const csv = await readFile((await download.path())!, 'utf8');
 	expect(csv.split('\r\n')[0]).toContain('candidate_offer_naira');
 	expect(csv).toContain('"synthetic-demo"');
