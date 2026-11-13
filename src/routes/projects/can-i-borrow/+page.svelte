@@ -218,8 +218,8 @@
 			</li>
 		</ul>
 		<p class="mt-4">
-			<a href="/projects/limit-rehearsal" class="text-accent underline underline-offset-4"
-				>Try LimitRehearsal</a
+			<a href="/projects/lendtrial" class="text-accent underline underline-offset-4"
+				>Try LendTrial</a
 			>
 			to see how reference scores can be used to compare two repeat-loan caps.
 		</p>
