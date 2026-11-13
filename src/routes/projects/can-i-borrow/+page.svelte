@@ -4,7 +4,7 @@
 	import CaseStudy from '$lib/components/case-study/CaseStudy.svelte';
 	import Flow from '$lib/components/case-study/Flow.svelte';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import { limitRehearsalUrl } from '$lib/data/projects';
+	import { lendTrialUrl } from '$lib/data/projects';
 
 	// The validation results come from the Can-I-Borrow README (held-out test cohort of
 	// 51,070 loans; 163,421 fit / 40,856 calibration / 51,070 test, stratified, seed 42).
@@ -219,9 +219,7 @@
 			</li>
 		</ul>
 		<p class="mt-4">
-			<a href={limitRehearsalUrl} class="text-accent underline underline-offset-4"
-				>Try LimitRehearsal</a
-			>
+			<a href={lendTrialUrl} class="text-accent underline underline-offset-4">Try LendTrial</a>
 			to see how reference scores can be used to compare two repeat-loan caps.
 		</p>
 	</section>

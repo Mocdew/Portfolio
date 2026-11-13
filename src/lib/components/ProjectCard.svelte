@@ -43,6 +43,9 @@
 	class="flex h-full flex-col rounded-md border border-hairline bg-panel transition-colors hover:border-muted/40
 		{featured ? 'p-5 sm:p-6' : 'p-4 sm:p-5'}"
 >
+	{#if project.legacySlug}
+		<span id={project.legacySlug} aria-hidden="true" class="block h-0"></span>
+	{/if}
 	{#if featured && project.image}
 		<div class="mb-5">{@render figure(project.image)}</div>
 	{/if}

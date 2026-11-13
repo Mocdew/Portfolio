@@ -60,7 +60,8 @@
 	// that card the jump would land nowhere, so show every project before it scrolls.
 	function reveal(hash: string) {
 		const slug = hash.slice(1);
-		if (projects.some((p) => p.slug === slug) && !shown.some((p) => p.slug === slug)) {
+		const project = projects.find((p) => p.slug === slug || p.legacySlug === slug);
+		if (project && !shown.includes(project)) {
 			filter = null;
 			flushSync();
 		}
