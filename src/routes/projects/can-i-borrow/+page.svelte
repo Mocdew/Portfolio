@@ -217,5 +217,11 @@
 				basis for declining someone.
 			</li>
 		</ul>
+		<p class="mt-4">
+			<a href="/projects/limit-rehearsal" class="text-accent underline underline-offset-4"
+				>Try LimitRehearsal</a
+			>
+			to see how reference scores can be used to compare two repeat-loan caps.
+		</p>
 	</section>
 </CaseStudy>
