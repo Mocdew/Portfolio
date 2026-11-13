@@ -9,7 +9,7 @@ test('old case study links retain their query and demo anchor', async ({ page })
 	await expect(page).toHaveURL(new RegExp(`${path}\\?source=portfolio#try-it$`));
 	await expect(page.getByRole('heading', { name: 'LendTrial', exact: true })).toBeVisible();
 	await expect(
-		page.locator('#try-it').getByRole('link', { name: 'Open LendTrial' })
+		page.locator('#try-it').getByRole('link', { name: 'Open LendTrial full page' })
 	).toHaveAttribute('href', demoUrl);
 	await page.goto('/#limit-rehearsal');
 	await expect(page.locator('#lendtrial')).toBeInViewport();
@@ -18,6 +18,15 @@ test('old case study links retain their query and demo anchor', async ({ page })
 test('the project card and case study link to the standalone app and repository', async ({
 	page
 }) => {
+	await page.goto('/');
+	const launch = page.getByRole('link', { name: 'Try the LendTrial demo' });
+	await expect(launch).toBeInViewport();
+	await launch.click();
+	await expect(page).toHaveURL(new RegExp(`${path}#try-it$`));
+	const demo = page.locator('#try-it').getByTitle('Interactive LendTrial demo');
+	await expect(demo).toBeInViewport();
+	await expect(demo).toHaveAttribute('src', demoUrl);
+
 	await page.goto('/');
 	const card = page.locator('#lendtrial');
 	await expect(card.getByRole('link', { name: /live demo/i })).toHaveAttribute('href', demoUrl);

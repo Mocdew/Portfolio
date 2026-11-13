@@ -35,7 +35,7 @@
 		</header>
 	{/if}
 
-	<main id="main" class="flex-1 {isCv ? '' : 'px-4 sm:px-8'}">
+	<main id="main" aria-label="Portfolio content" class="flex-1 {isCv ? '' : 'px-4 sm:px-8'}">
 		{@render children()}
 	</main>
 

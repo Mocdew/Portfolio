@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CaseStudy from '$lib/components/case-study/CaseStudy.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 	import { lendTrialUrl } from '$lib/data/projects';
 </script>
@@ -10,10 +11,22 @@
 >
 	<section id="try-it" aria-labelledby="try-it-heading">
 		<SectionHeading id="try-it" title="Run the demo" />
-		<p>
-			<a href={lendTrialUrl} class="text-accent underline underline-offset-4">Open LendTrial</a>
-			to compare caps, simulate a pilot, or load the scored sample.
-		</p>
+		<div class="mb-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+			<p>Try a loan cap change using synthetic borrowers and simulated payments.</p>
+			<a
+				href={lendTrialUrl}
+				class="inline-flex items-center gap-1 text-sm text-accent underline underline-offset-4"
+			>
+				Open LendTrial full page <Icon name="arrow-up-right" size={13} />
+			</a>
+		</div>
+		<iframe
+			src={lendTrialUrl}
+			title="Interactive LendTrial demo"
+			loading="lazy"
+			sandbox="allow-scripts allow-same-origin allow-downloads"
+			class="block h-[80svh] max-h-[52rem] min-h-[30rem] w-full rounded-md border border-hairline bg-panel"
+		></iframe>
 	</section>
 
 	<section id="decision" aria-labelledby="decision-heading">

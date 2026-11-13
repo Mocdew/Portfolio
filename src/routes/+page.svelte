@@ -103,6 +103,12 @@
 		class="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 text-sm"
 	>
 		<a
+			href="{resolve('/projects/lendtrial')}#try-it"
+			class="inline-flex items-center gap-1.5 rounded border border-fg bg-fg px-4 py-2 font-semibold text-bg transition-colors hover:bg-bg hover:text-fg"
+		>
+			Try the LendTrial demo <span aria-hidden="true">→</span>
+		</a>
+		<a
 			href="/why-hire-me"
 			class="inline-flex items-center gap-1.5 rounded border border-fg px-4 py-2 font-semibold text-fg transition-colors hover:bg-fg hover:text-bg"
 		>
