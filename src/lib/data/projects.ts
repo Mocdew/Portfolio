@@ -190,6 +190,24 @@ export const projects: Project[] = [
 		category: 'Forecasting'
 	},
 	{
+		slug: 'tax-draft-assistant',
+		title: 'Tax Draft Assistant',
+		language: 'Python',
+		hook: 'Did my employer take the right amount of tax?',
+		description:
+			'Turns a Nigerian employee’s payroll summary, payslips and rent receipt into a draft 2026 personal income tax computation. Uploads are read in a sandboxed PyMuPDF + Tesseract worker, and every extracted value is only a suggestion until the user confirms it next to its highlighted source. The demo plants an ₦800 misread to prove the point. Calculations come from a pure, versioned rules module; each draft line links to its rule and evidence, saved drafts can be replayed from their inputs, and editing a confirmed value marks the draft out of date. FastAPI + PostgreSQL backend, React review app, Docker Compose. All data is synthetic and the ruleset awaits a tax reviewer’s sign-off.',
+		metrics: [
+			'every amount traced to its source',
+			'sandboxed OCR',
+			'reproducible drafts',
+			'68 Python + 59 web tests'
+		],
+		tags: ['FastAPI', 'PostgreSQL', 'Tesseract OCR', 'PyMuPDF', 'React', 'TypeScript', 'Docker'],
+		links: {},
+		category: 'Product',
+		private: true
+	},
+	{
 		slug: 'deal-desk',
 		title: 'Deal Desk',
 		language: 'Python',
