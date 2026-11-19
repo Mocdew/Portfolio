@@ -240,6 +240,8 @@ test('the blog lists posts, opens one with highlighted code and links to the nex
 		'A store ratio beat three tuned boosting models'
 	);
 	await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
+	// A post without its own preview image falls back to the site-wide card.
+	await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\.png$/);
 	// Shiki colours tokens at build time.
 	await expect(page.locator('pre.shiki span[style*="--shiki-light"]').first()).toBeAttached();
 	await expect(page.getByRole('button', { name: 'Copy code' })).toHaveCount(1);
@@ -261,6 +263,20 @@ test('the blog tag filter narrows the list', async ({ page }) => {
 	await expect(posts).toHaveCount(1);
 	await page.getByRole('button', { name: 'All' }).click();
 	await expect(posts).toHaveCount(all);
+});
+
+test('a post with a preview image uses it for link previews', async ({ page, request }) => {
+	await page.goto('/blog/the-naira-staircase');
+	const og = await page.locator('meta[property="og:image"]').getAttribute('content');
+	expect(og).toMatch(/\/blog\/the-naira-staircase\/preview\.png$/);
+	await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', og!);
+	await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
+		'content',
+		/naira price of one US dollar/
+	);
+	const res = await request.get(new URL(og!).pathname);
+	expect(res.status()).toBe(200);
+	expect(res.headers()['content-type']).toContain('image/png');
 });
 
 test('the RSS feed lists every post', async ({ request }) => {

@@ -3,6 +3,8 @@ title: The naira falls off cliffs
 description: I looked at 66 years of the naira's exchange rate against the US dollar. It almost never slides down slowly. It sits still for years, then drops in a single month, nearly always because of a government decision.
 date: 2026-11-19
 tags: [forecasting, volatility, time-series]
+image: /blog/the-naira-staircase/preview.png
+imageAlt: Chart of the naira price of one US dollar from 1960 to 2026, climbing in sudden steps from ₦0.71 to ₦1,353.
 ---
 
 I'm based in Lagos, and I've forecast the volatility of [Brent crude](/#brent-volatility) and [EUR/USD](/#eurusd-volatility). The naira against the dollar was the obvious next one to study. So I pulled every month of the official rate back to independence, along with daily market prices and oil prices, and ran the same kind of models on it. The shape of the answer surprised me: the naira doesn't slide, it falls off cliffs.

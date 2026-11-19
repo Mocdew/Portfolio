@@ -29,12 +29,18 @@ function validate(slug: string, meta: Partial<PostMeta> | undefined): PostMeta {
 	if (Number.isNaN(date.getTime())) fail(`date "${meta.date}" is not a valid YYYY-MM-DD date`);
 	if (!Array.isArray(meta.tags) || meta.tags.some((t) => typeof t !== 'string'))
 		fail('tags must be a list, e.g. [python, forecasting]');
+	// Social sites don't all read WebP, so preview images must be PNG or JPG.
+	if (meta.image !== undefined && !/^\/[\w/.-]+\.(png|jpe?g)$/.test(String(meta.image)))
+		fail('image must be a .png or .jpg path under static/, starting with /');
+	if (meta.image && (typeof meta.imageAlt !== 'string' || !meta.imageAlt.trim()))
+		fail('imageAlt is required when image is set');
 	return {
 		title: meta.title!.trim(),
 		description: meta.description!.trim(),
 		date: date.toISOString().slice(0, 10),
 		tags: meta.tags!.map((t) => t.toLowerCase()),
-		draft: meta.draft === true
+		draft: meta.draft === true,
+		...(meta.image && { image: meta.image, imageAlt: meta.imageAlt!.trim() })
 	};
 }
 

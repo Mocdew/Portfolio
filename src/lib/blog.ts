@@ -10,6 +10,11 @@ export type PostMeta = {
 	tags: string[];
 	/** Drafts show up in `pnpm dev` but are left out of the build. */
 	draft?: boolean;
+	/** Link-preview image for LinkedIn, X etc.: a 1200×630 PNG or JPG under /static, e.g.
+	 * /blog/<slug>/preview.png. Without one, the site-wide /og.png is used. */
+	image?: string;
+	/** Describes `image` for screen readers. Required when `image` is set. */
+	imageAlt?: string;
 };
 
 export type Post = PostMeta & {

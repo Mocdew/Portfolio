@@ -18,7 +18,8 @@ Built with SvelteKit 2 (Svelte 5), TypeScript and Tailwind CSS v4. Every page is
 
 Each post starts with frontmatter (`title`, `description`, `date: YYYY-MM-DD`, `tags: [..]`,
 optional `draft: true`). The file name becomes the URL, and the build fails on missing or
-malformed fields. Drafts show in `pnpm dev` only. Code fences are highlighted at build time;
+malformed fields. For a custom link preview on LinkedIn or X, add
+`image: /blog/<slug>/preview.png` (a 1200×630 PNG or JPG in `static/`) and `imageAlt`. Drafts show in `pnpm dev` only. Code fences are highlighted at build time;
 add a language to the list in `vite.config.ts` before using it.
 
 The résumé in `static/` is public. Keep its contact details in sync with the web CV when replacing it.
