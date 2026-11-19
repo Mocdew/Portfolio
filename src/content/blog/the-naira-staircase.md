@@ -1,9 +1,11 @@
 ---
 title: The naira falls off cliffs
-description: We looked at 66 years of the naira's exchange rate against the US dollar. It almost never slides down slowly. It sits still for years, then drops in a single month, nearly always because of a government decision.
+description: I looked at 66 years of the naira's exchange rate against the US dollar. It almost never slides down slowly. It sits still for years, then drops in a single month, nearly always because of a government decision.
 date: 2026-11-19
 tags: [forecasting, volatility, time-series]
 ---
+
+I'm based in Lagos, and I've forecast the volatility of [Brent crude](/#brent-volatility) and [EUR/USD](/#eurusd-volatility). The naira against the dollar was the obvious next one to study. So I pulled every month of the official rate back to independence, along with daily market prices and oil prices, and ran the same kind of models on it. The shape of the answer surprised me: the naira doesn't slide, it falls off cliffs.
 
 <figure>
 	<img
@@ -30,7 +32,7 @@ You might expect a rise that large to happen gradually, a little each month. It 
 
 ## The rules decide how wild the naira gets
 
-Since independence, Nigeria has changed the way it manages the naira about ten times. Sometimes the rate was fixed by the government, sometimes it was set at auctions, and sometimes it was left to the market. We measured how much the naira swung around under each of these policy periods. Economists call this swing **volatility**. Between the calmest period and the wildest, it differs by **more than 50 times**.
+Since independence, Nigeria has changed the way it manages the naira about ten times. Sometimes the rate was fixed by the government, sometimes it was set at auctions, and sometimes it was left to the market. I measured how much the naira swung around under each of these policy periods. Economists call this swing **volatility**. Between the calmest period and the wildest, it differs by **more than 50 times**.
 
 <figure>
 	<img
@@ -51,21 +53,21 @@ The current system, which started in June 2023, is the first on record in which 
 
 ### Even the calm was a decision
 
-The quiet years were as much a policy choice as the sudden drops. We gave a computer model only the monthly numbers, with no dates or history, and asked it to sort the months into “frozen” and “moving”. It found the political history on its own: the 1993–98 freeze, the 2015–16 hold at ₦197, and the long stretch in 2018–20 when the official rate was parked while most business went through other windows.
+The quiet years were as much a policy choice as the sudden drops. I gave a model only the monthly numbers, with no dates or history, and asked it to sort the months into “frozen” and “moving”. It found the political history on its own: the 1993–98 freeze, the 2015–16 hold at ₦197, and the long stretch in 2018–20 when the official rate was parked while most business went through other windows.
 
-A separate test that searches the data for turning points found the biggest ones in 1978, mid-1993, January 1999, 2004 and June 2023. Three of those five fall within a month of a known policy change.
+I then ran a separate test that searches the data for turning points. It found the biggest ones in 1978, mid-1993, January 1999, 2004 and June 2023. Three of those five fall within a month of a known policy change.
 
 ## Shocks fade faster than they seem to
 
-The standard models used to forecast currency swings assume that a burst of turbulence fades slowly, like ripples on a pond. When we ran them on the naira without telling them about the policy changes, they concluded the ripples never fade: one big shock would keep the naira jumpy forever.
+The standard models used to forecast currency swings assume that a burst of turbulence fades slowly, like ripples on a pond. When I ran them on the naira without telling them about the policy changes, they concluded the ripples never fade: one big shock would keep the naira jumpy forever.
 
-That conclusion is wrong. Once the models are told that each policy period has its own normal level of turbulence, a shock fades in months. **Half of its effect is gone within 2 to 18 months**, depending on the model. What looked like a long memory was really the long life of each policy period.
+That conclusion is wrong. Once I told the models that each policy period has its own normal level of turbulence, a shock faded in months. **Half of its effect is gone within 2 to 18 months**, depending on the model. What looked like a long memory was really the long life of each policy period.
 
-The models found one more pattern. A sharp fall in the naira makes the following months more nervous, while a sharp rise does not. When the naira drops, people expect it may drop again.
+The models showed me one more pattern. A sharp fall in the naira makes the following months more nervous, while a sharp rise does not. When the naira drops, people expect it may drop again.
 
 ## Oil matters, but not in the way people think
 
-Oil earns about nine-tenths of Nigeria's export income, so it is natural to blame oil prices for the naira's swings. The numbers lean the expected way: after oil prices fall, the naira tends to be a little more unsettled, and after they rise, nothing much happens. But once the policy changes are taken into account, the effect is small and not reliable.
+Oil earns about nine-tenths of Nigeria's export income, so it is natural to blame oil prices for the naira's swings. My numbers lean the expected way: after oil prices fall, the naira tends to be a little more unsettled, and after they rise, nothing much happens. But once I took the policy changes into account, the effect was small and not reliable.
 
 Oil does its damage another way. The oil-price crashes of 2008–09, 2014–16 and 2020 all reached the naira **months later, through official devaluations**. The shock arrived as a government decision, not as day-to-day market turbulence.
 
@@ -86,7 +88,7 @@ Oil does its damage another way. The oil-price crashes of 2008–09, 2014–16 a
 
 The first year after the June 2023 unification was rough. Measured day to day, the naira's typical yearly swing was above 140% in the first weeks and 75% in early 2024. In early 2024 a change in how the official rate was calculated pushed the dollar's price up by about a third in a single day. Since the new electronic trading system started in December 2024, the market has calmed sharply. In the latest quarter the swing is **about 3% a year**, the calmest since unification.
 
-For the next two weeks, our best model expects the calm to continue. Starting from ₦1,345 to the dollar on 17 November 2026, it puts the rate between **about ₦1,327 and ₦1,364**, with 95% confidence. We also tested the model on the previous eight months: its warnings about how far the naira might fall were right about as often as they should have been.
+For the next two weeks, my best model expects the calm to continue. Starting from ₦1,345 to the dollar on 17 November 2026, it puts the rate between **about ₦1,327 and ₦1,364**, with 95% confidence. I also tested the model on the previous eight months: its warnings about how far the naira might fall were right about as often as they should have been.
 
 <figure>
 	<img
@@ -101,15 +103,15 @@ For the next two weeks, our best model expects the calm to continue. Starting fr
 	</figcaption>
 </figure>
 
-For the coming year we show two views. The **main forecast** expects the swing to settle at around 9–11% a year. That is livelier than the past twelve months but far calmer than 2023–24. The **pessimistic scenario** climbs to about 25% a year, because it assumes the next year will look like the average of the whole period since 2023, including its two upheavals.
+For the coming year I show two views. The **main forecast** expects the swing to settle at around 9–11% a year. That is livelier than the past twelve months but far calmer than 2023–24. The **pessimistic scenario** climbs to about 25% a year, because it assumes the next year will look like the average of the whole period since 2023, including its two upheavals.
 
-## What this means
+## What I take from this
 
 - **Waiting makes it worse.** The naira's worst months were adjustments that had been put off and then made all at once. A rate that moves a little every month avoids the cliff. The current system, with no frozen months and calmer swings since late 2024, is the first long test of that idea.
 - **Trust calms the market.** Because the naira's jumpiness is tied to policy periods, the best way to keep it calm is a system people expect to last. Under a trusted system, shocks fade within months.
 - **Reserves protect against oil shocks.** Oil crashes hurt the naira through the forced devaluations that follow them. Foreign-currency reserves large enough to avoid those devaluations protect the naira where it is most exposed.
-- **Plan for both calm and storm.** Businesses and banks that look only at the calm of 2025–26 will underestimate the risk of another policy change. Those that look only at the full history will overestimate everyday risk. Use both views.
+- **Plan for both calm and storm.** Businesses and banks that look only at the calm of 2025–26 will underestimate the risk of another policy change. Those that look only at the full history will overestimate everyday risk. I use both views, and I'd suggest you do too.
 
 ## About the data
 
-The monthly figures are the official central bank rate, as published by the Bank for International Settlements. During periods with several exchange rates (the late 1990s and 2017–2023), the rates people actually paid, including on the street, moved far more, so those periods look calmer here than they were. Daily figures come from market prices published by Yahoo Finance, with three obvious errors removed. Oil prices come from the US Federal Reserve's FRED database. Inflation was only available yearly, and foreign reserves were not available. “Swing” means the annualised standard deviation of price changes. The forecasts and tests come from a reproducible Python notebook that uses GARCH and regime-switching models.
+For the monthly figures I used the official central bank rate, as published by the Bank for International Settlements. During periods with several exchange rates (the late 1990s and 2017–2023), the rates people actually paid, including on the street, moved far more, so those periods look calmer here than they were. The daily figures are market prices published by Yahoo Finance; I removed three obvious errors. Oil prices come from the US Federal Reserve's FRED database. I could only get inflation yearly, and I couldn't get foreign reserves at all. By “swing” I mean the annualised standard deviation of price changes. I built the forecasts and tests in a reproducible Python notebook, using GARCH and regime-switching models.
