@@ -13,7 +13,13 @@ Built with SvelteKit 2 (Svelte 5), TypeScript and Tailwind CSS v4. Every page is
 | Home page layout and copy              | `src/routes/+page.svelte`              |
 | Why hire me page                       | `src/routes/why-hire-me/+page.svelte`  |
 | Web CV                                 | `src/routes/cv/+page.svelte`           |
+| Blog posts                             | `src/content/blog/<slug>.md`           |
 | Résumé PDF                             | `static/Olumide_Erinfolami_Resume.pdf` |
+
+Each post starts with frontmatter (`title`, `description`, `date: YYYY-MM-DD`, `tags: [..]`,
+optional `draft: true`). The file name becomes the URL, and the build fails on missing or
+malformed fields. Drafts show in `pnpm dev` only. Code fences are highlighted at build time;
+add a language to the list in `vite.config.ts` before using it.
 
 The résumé in `static/` is public. Keep its contact details in sync with the web CV when replacing it.
 

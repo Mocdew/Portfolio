@@ -5,6 +5,7 @@
 	import AsciiName from '$lib/components/AsciiName.svelte';
 	import DotNav from '$lib/components/DotNav.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import PostList from '$lib/components/PostList.svelte';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 	import Seo from '$lib/components/Seo.svelte';
@@ -13,13 +14,16 @@
 	import { education, experience, site, skills } from '$lib/data/site';
 	import { copy, palette } from '$lib/ui.svelte';
 
-	const sections = [
+	let { data } = $props();
+
+	const sections = $derived([
 		{ id: 'hero', label: 'Top' },
 		{ id: 'projects', label: 'Projects' },
 		{ id: 'experience', label: 'Experience' },
 		{ id: 'toolkit', label: 'Toolkit' },
+		...(data.latestPosts.length ? [{ id: 'writing', label: 'Writing' }] : []),
 		{ id: 'contact', label: 'Contact' }
-	];
+	]);
 
 	const selectedWork = [
 		{
@@ -111,6 +115,8 @@
 		<a href="#projects" class="font-semibold underline-offset-4 hover:underline">Projects</a>
 		<span class="text-dim" aria-hidden="true">·</span>
 		<a href="/cv" class="font-semibold underline-offset-4 hover:underline">CV</a>
+		<span class="text-dim" aria-hidden="true">·</span>
+		<a href="/blog" class="font-semibold underline-offset-4 hover:underline">Blog</a>
 		<span class="text-dim" aria-hidden="true">·</span>
 		<button
 			type="button"
@@ -299,8 +305,23 @@
 	</dl>
 </section>
 
+{#if data.latestPosts.length}
+	<section id="writing" aria-labelledby="writing-heading" class="py-12">
+		<SectionHeading
+			id="writing"
+			index={4}
+			title="Writing"
+			meta="{data.postCount} {data.postCount === 1 ? 'post' : 'posts'}"
+		/>
+		<PostList posts={data.latestPosts} />
+		<p class="mt-6 text-right text-sm">
+			<a href="/blog" class="text-muted hover:text-fg">All posts →</a>
+		</p>
+	</section>
+{/if}
+
 <section id="contact" aria-labelledby="contact-heading" class="py-12 pb-20">
-	<SectionHeading id="contact" index={4} title="Contact" />
+	<SectionHeading id="contact" index={data.latestPosts.length ? 5 : 4} title="Contact" />
 	<p class="font-sans text-fg">
 		Looking for a machine learning role building reliable AI features for fintech and startup
 		products.

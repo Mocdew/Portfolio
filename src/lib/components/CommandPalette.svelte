@@ -14,6 +14,7 @@
 			['projects', 'Projects'],
 			['experience', 'Experience'],
 			['toolkit', 'Toolkit'],
+			['writing', 'Writing'],
 			['contact', 'Contact']
 		].map(([id, label]) => ({
 			id: `go-${id}`,
@@ -33,6 +34,13 @@
 			label: 'CV',
 			hint: 'Résumé, experience and selected projects',
 			run: () => goto(resolve('/cv'))
+		},
+		{
+			id: 'go-blog',
+			group: 'Go to',
+			label: 'Blog',
+			hint: 'All posts',
+			run: () => goto(resolve('/blog'))
 		},
 		...projects
 			.filter((p) => p.caseStudy)

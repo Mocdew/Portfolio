@@ -43,9 +43,9 @@ test('why-hire-me page links directly to case studies', async ({ page }) => {
 	await expect(page).toHaveURL(/\/projects\/can-i-borrow$/);
 });
 
-test('home and CV pages do not scroll sideways on a phone', async ({ page }) => {
+test('home, CV and blog pages do not scroll sideways on a phone', async ({ page }) => {
 	await page.setViewportSize({ width: 375, height: 812 });
-	for (const path of ['/', '/cv']) {
+	for (const path of ['/', '/cv', '/blog', '/blog/store-ratio-beat-boosting']) {
 		await page.goto(path);
 		const overflow = await page.evaluate(
 			() => document.documentElement.scrollWidth - document.documentElement.clientWidth
@@ -112,6 +112,8 @@ const pages = [
 	'/',
 	'/cv',
 	'/why-hire-me',
+	'/blog',
+	'/blog/store-ratio-beat-boosting',
 	...projects.filter((p) => p.caseStudy).map(caseStudyHref)
 ];
 
@@ -215,4 +217,49 @@ test('system theme follows the operating system', async ({ page }) => {
 	await page.emulateMedia({ colorScheme: 'dark' });
 	await page.reload();
 	await expect(html).toHaveAttribute('data-theme', 'dark');
+});
+
+test('the blog lists posts, opens one with highlighted code and links to the next', async ({
+	page
+}) => {
+	await page.goto('/');
+	await page.getByRole('link', { name: 'Blog', exact: true }).click();
+	await expect(page).toHaveURL(/\/blog$/);
+	await expect(page.getByRole('heading', { level: 1, name: 'Blog' })).toBeVisible();
+
+	await page.getByRole('link', { name: 'A store ratio beat three tuned boosting models' }).click();
+	await expect(page).toHaveURL(/\/blog\/store-ratio-beat-boosting$/);
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+		'A store ratio beat three tuned boosting models'
+	);
+	await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
+	// Shiki colours tokens at build time.
+	await expect(page.locator('pre.shiki span[style*="--shiki-light"]').first()).toBeAttached();
+	await expect(page.getByRole('button', { name: 'Copy code' })).toHaveCount(1);
+
+	await page
+		.getByRole('navigation', { name: 'More posts' })
+		.getByRole('link', { name: /Newer/ })
+		.click();
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+		'Building a model that refuses to go live'
+	);
+});
+
+test('the blog tag filter narrows the list', async ({ page }) => {
+	await page.goto('/blog');
+	const posts = page.locator('main article');
+	const all = await posts.count();
+	await page.getByRole('button', { name: 'payments' }).click();
+	await expect(posts).toHaveCount(1);
+	await page.getByRole('button', { name: 'All' }).click();
+	await expect(posts).toHaveCount(all);
+});
+
+test('the RSS feed lists every post', async ({ request }) => {
+	const res = await request.get('/rss.xml');
+	expect(res.status()).toBe(200);
+	const xml = await res.text();
+	expect(xml).toContain('/blog/store-ratio-beat-boosting</link>');
+	expect(xml).toContain('/blog/a-model-that-refuses-to-go-live</link>');
 });

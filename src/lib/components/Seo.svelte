@@ -2,8 +2,18 @@
 	import { page } from '$app/state';
 	import { site } from '$lib/data/site';
 
-	let { title, description = site.description }: { title?: string; description?: string } =
-		$props();
+	let {
+		title,
+		description = site.description,
+		type = 'website',
+		published
+	}: {
+		title?: string;
+		description?: string;
+		type?: 'website' | 'article';
+		/** YYYY-MM-DD, for articles. */
+		published?: string;
+	} = $props();
 
 	const fullTitle = $derived(title ? `${title} | ${site.name}` : `${site.name} | ${site.role}`);
 	const canonical = $derived(new URL(page.url.pathname, site.url).href);
@@ -17,7 +27,11 @@
 	<meta name="author" content={site.name} />
 	<link rel="canonical" href={canonical} />
 
-	<meta property="og:type" content="website" />
+	<meta property="og:type" content={type} />
+	{#if type === 'article' && published}
+		<meta property="article:published_time" content={published} />
+		<meta property="article:author" content={site.name} />
+	{/if}
 	<meta property="og:site_name" content={site.name} />
 	<meta property="og:title" content={fullTitle} />
 	<meta property="og:description" content={description} />
