@@ -1,7 +1,7 @@
 ---
 title: Building a model that refuses to go live
 description: Recoup plans payment retries better than a fixed 1/3/7-day ladder in simulation. The most important part is the gate that keeps it switched off until real evidence says so.
-date: 2026-11-19
+date: 2026-11-16
 tags: [payments, causal-inference, mlops]
 ---
 

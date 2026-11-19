@@ -45,7 +45,13 @@ test('why-hire-me page links directly to case studies', async ({ page }) => {
 
 test('home, CV and blog pages do not scroll sideways on a phone', async ({ page }) => {
 	await page.setViewportSize({ width: 375, height: 812 });
-	for (const path of ['/', '/cv', '/blog', '/blog/store-ratio-beat-boosting']) {
+	for (const path of [
+		'/',
+		'/cv',
+		'/blog',
+		'/blog/store-ratio-beat-boosting',
+		'/blog/the-naira-staircase'
+	]) {
 		await page.goto(path);
 		const overflow = await page.evaluate(
 			() => document.documentElement.scrollWidth - document.documentElement.clientWidth
@@ -114,6 +120,7 @@ const pages = [
 	'/why-hire-me',
 	'/blog',
 	'/blog/store-ratio-beat-boosting',
+	'/blog/the-naira-staircase',
 	...projects.filter((p) => p.caseStudy).map(caseStudyHref)
 ];
 
@@ -262,4 +269,5 @@ test('the RSS feed lists every post', async ({ request }) => {
 	const xml = await res.text();
 	expect(xml).toContain('/blog/store-ratio-beat-boosting</link>');
 	expect(xml).toContain('/blog/a-model-that-refuses-to-go-live</link>');
+	expect(xml).toContain('/blog/the-naira-staircase</link>');
 });
