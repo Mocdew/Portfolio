@@ -1,3 +1,4 @@
+import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { collectPosts, posts, readingMinutes } from './posts';
 
@@ -48,6 +49,23 @@ describe('collectPosts', () => {
 		expect(() => collectPosts({ '/src/content/blog/bad.md': bad }, {})).toThrow(message);
 	});
 
+	it('accepts a PNG or JPG preview image with alt text', () => {
+		const [post] = collectPosts(
+			{ '/src/content/blog/a.md': meta({ image: '/blog/a/preview.png', imageAlt: 'A chart' }) },
+			{}
+		);
+		expect(post.image).toBe('/blog/a/preview.png');
+		expect(post.imageAlt).toBe('A chart');
+	});
+
+	it.each([
+		['must be a .png or .jpg', meta({ image: '/blog/a/preview.webp', imageAlt: 'A chart' })],
+		['must be a .png or .jpg', meta({ image: 'blog/a/preview.png', imageAlt: 'A chart' })],
+		['imageAlt is required', meta({ image: '/blog/a/preview.png' })]
+	])('rejects a bad preview image (%s)', (message, bad) => {
+		expect(() => collectPosts({ '/src/content/blog/bad.md': bad }, {})).toThrow(message);
+	});
+
 	it('rejects file names that would make awkward URLs', () => {
 		expect(() => collectPosts({ '/src/content/blog/My Post.md': meta() }, {})).toThrow(
 			'lowercase words'
@@ -71,5 +89,17 @@ describe('published posts', () => {
 	it('all have valid frontmatter and unique slugs', () => {
 		expect(posts.length).toBeGreaterThan(0);
 		expect(new Set(posts.map((p) => p.slug)).size).toBe(posts.length);
+	});
+
+	it('point at preview images that exist and are 1200×630', () => {
+		for (const { slug, image } of posts.filter((p) => p.image)) {
+			const file = `static${image}`;
+			expect(existsSync(file), `${slug}: ${file}`).toBe(true);
+			if (file.endsWith('.png')) {
+				// A PNG stores its width and height as big-endian integers at bytes 16 and 20.
+				const png = readFileSync(file);
+				expect([png.readUInt32BE(16), png.readUInt32BE(20)], slug).toEqual([1200, 630]);
+			}
+		}
 	});
 });

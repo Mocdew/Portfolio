@@ -26,7 +26,13 @@
 	}
 </script>
 
-<Seo title={post.title} description={post.description} type="article" published={post.date} />
+<Seo
+	title={post.title}
+	description={post.description}
+	type="article"
+	published={post.date}
+	image={post.image ? { src: post.image, alt: post.imageAlt! } : undefined}
+/>
 <svelte:head>
 	<link rel="alternate" type="application/rss+xml" title="{site.name}: Blog" href="/rss.xml" />
 </svelte:head>
