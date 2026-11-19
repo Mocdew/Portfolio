@@ -248,6 +248,27 @@ body::after {
 	& pre code {
 		font-family: inherit;
 	}
+	& figure {
+		margin: 2.5rem 0;
+	}
+	/* Charts are exported on white, so frame them as cards rather than recolouring them. */
+	& figure img {
+		width: 100%;
+		height: auto;
+		margin: 0;
+		background: #fff;
+		border: 1px solid var(--color-hairline);
+		border-radius: 6px;
+	}
+	& figcaption {
+		max-width: 65ch;
+		font-size: 0.85rem;
+		line-height: 1.6;
+		color: var(--color-dim);
+	}
+	& figcaption strong {
+		color: var(--color-fg);
+	}
 	& .copy-code {
 		position: absolute;
 		top: 0.5rem;
@@ -270,6 +291,11 @@ body::after {
 			opacity: 1;
 		}
 	}
+}
+
+/* Soften the white chart cards a little against the dark page. */
+:root[data-theme='dark'] .post figure img {
+	filter: brightness(0.9);
 }
 
 /* Shiki emits both code themes as CSS variables; pick the one matching the site theme. */
