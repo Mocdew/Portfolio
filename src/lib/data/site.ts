@@ -49,7 +49,7 @@ export const experience: Job[] = [
 export const education = {
 	degree: 'B.Sc. Computer Science',
 	school: 'Covenant University',
-	dates: '2021 – 2025'
+	dates: '2021 – 2026'
 };
 
 /** `note` is a short line under the group name: what I actually do with these, not a keyword dump. */
